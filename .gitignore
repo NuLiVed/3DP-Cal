@@ -1,0 +1,12 @@
+# Python virtual environment
+venv/
+__pycache__/
+*.pyc
+
+# Database (Keep your local data private)
+data/*.db
+
+# Build files
+dist/
+build/
+*.spec
