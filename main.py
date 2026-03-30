@@ -10,11 +10,35 @@ import database
 import logic
 import export
 
+# Define Global Themes for Light and Dark Mode
+THEMES = {
+    "light": {
+        "bg": "#F8F9FA",       # Penelope Off-white
+        "card": "#FFFFFF",     # Pure white
+        "text": "#2C3E50",     # Dark Navy
+        "accent": "#FF9F43",   # Penelope Orange
+        "secondary": "#5758BB", # Penelope Indigo
+        "entry_bg": "#F1F2F6"
+    },
+    "dark": {
+        "bg": "#1E272E",       # Hazenthley Deep Navy
+        "card": "#2D3436",     # Hazenthley Charcoal
+        "text": "#FFFFFF",     # White
+        "accent": "#F1C40F",   # Hazenthley Yellow
+        "secondary": "#0984E3", # Hazenthley Cyan
+        "entry_bg": "#34495E"
+    }
+}
+
 class CalculatorApp:
     def __init__(self, root):
         self.root = root
         self.root.title("3DP Cost Calculator")
         self.root.geometry("400x500")
+        
+        # Default Theme
+        self.current_theme = "light" 
+        self.theme_elements = []
         
         # Initialize Database on startup
         database.initialize_database()
@@ -33,6 +57,67 @@ class CalculatorApp:
             self.root.iconphoto(True, self.app_icon)
         except Exception as e:
             print(f"Window icon failed to load: {e}")
+            
+        # Apply Default Theme
+        self.apply_theme()
+            
+    def toggle_theme(self):
+        """Switches the theme and triggers a UI repaint"""
+        self.current_theme = "dark" if self.current_theme == "light" else "light"
+        self.apply_theme()
+        
+    def apply_theme(self):
+        """Universal Paintbrush: Purple Toolbar | Black-to-Yellow Calculate Button"""
+        colors = THEMES[self.current_theme]
+        
+        # 1. Main Background and Card
+        self.root.configure(bg=colors["bg"])
+        self.content_frame.configure(bg=colors["card"])
+        
+        # 2. TOOLBAR: Always Penelope Indigo (#5758BB)
+        toolbar_color = colors["secondary"] 
+        self.toolbar.configure(bg=toolbar_color)
+
+        # 3. Handle Icons and Logo backgrounds to match the purple toolbar
+        if hasattr(self, 'theme_btn'):
+            new_icon = "☀️" if self.current_theme == "dark" else "🌙"
+            self.theme_btn.configure(text=new_icon, bg=toolbar_color, fg="white")
+            
+        if hasattr(self, 'settings_btn'):
+            self.settings_btn.configure(bg=toolbar_color, activebackground=toolbar_color)
+            
+        if hasattr(self, 'logo_label'):
+            self.logo_label.configure(bg=toolbar_color)
+
+        # 4. Loop through registered elements
+        for element in self.theme_elements:
+            try:
+                if element.winfo_exists():
+                    # If it's in the toolbar, match the purple
+                    if element.master == self.toolbar:
+                        element.configure(bg=toolbar_color, fg="white")
+                    else:
+                        # Otherwise, match the main card/bg colors
+                        element.configure(bg=colors["card"], fg=colors["text"])
+                    
+                    # 5. SPECIAL CASE: CALCULATE BUTTON COLOR SWAP
+                    if isinstance(element, tk.Button) and "Calculate" in element.cget("text"):
+                        if self.current_theme == "dark":
+                            # HAZENTHLEY YELLOW: Yellow background, Black text
+                            element.configure(
+                                bg=colors["accent"],  # #F1C40F
+                                fg="black", 
+                                activebackground="#D4AC0D" # Slightly darker yellow for hover
+                            )
+                        else:
+                            # PENELOPE BLACK/NAVY: Dark background, White text
+                            element.configure(
+                                bg="#2C3E50", 
+                                fg="white", 
+                                activebackground="#34495E"
+                            )
+            except:
+                continue
         
     # Load Last Job Data into Input Fields for Quick Reprint
     def load_last_job(self):
@@ -67,82 +152,101 @@ class CalculatorApp:
         
     def create_toolbar(self):
         """Creates top icon toolbar for quick access to settings and receipt history"""
-        toolbar = tk.Frame(self.root, bg="#f0f0f0", height=60)
-        toolbar.pack(side="top", fill="x")
+        colors = THEMES[self.current_theme]
+        self.toolbar = tk.Frame(self.root, bg=colors["bg"], height=60)
+        self.toolbar.pack(side="top", fill="x")
         
-        # Load Logo Image
+        # --- LEFT SIDE: Logo & Title ---
         try:
-            # Load and Resize Logo Image to 30x30 pixels
             logo_raw = Image.open("assets/Logo.png").resize((30, 30), Image.Resampling.LANCZOS)
             self.logo_img = ImageTk.PhotoImage(logo_raw)
-            
-            logo_label = tk.Label(toolbar, image=self.logo_img, bg="#f0f0f0")
-            logo_label.pack(side="left", padx=(15, 5), pady=10)
-        except Exception as e:
-            print(f"Logo not found: {e}")
-            
-        # App Title
-        tk.Label(toolbar, text="PrintCalc", font=("Arial", 12, "bold"), 
-                bg="#ffffff", fg="#333").pack(side="left")
-        
-        # Settings Button
+            self.logo_label = tk.Label(self.toolbar, image=self.logo_img, bg=colors['bg'])
+            self.logo_label.pack(side="left", padx=(15, 5), pady=10)
+            self.theme_elements.append(self.logo_label)
+        except: pass
+
+        self.title_lbl = tk.Label(self.toolbar, text="3DP", font=("Arial", 12, "bold"))
+        self.title_lbl.pack(side="left", padx=5)
+        self.theme_elements.append(self.title_lbl)
+
+        # --- RIGHT SIDE (Packed in order of priority) ---
+
+        # 1. SETTINGS BUTTON (Packed first = Far Right)
         try: 
-            settings_raw = Image.open("Assets/settings_icon.png")
-            settings_res = settings_raw.resize((25,25), Image.Resampling.LANCZOS)
-            self.settings_img = ImageTk.PhotoImage(settings_res)
-            
+            settings_raw = Image.open("Assets/settings_icon.png").resize((25,25), Image.Resampling.LANCZOS)
+            self.settings_img = ImageTk.PhotoImage(settings_raw)
             self.settings_btn = tk.Button(
-                toolbar, image=self.settings_img, command=self.open_settings,
-                relief="flat", bg="#ffffff", activebackground="#f8f9fa",
+                self.toolbar, image=self.settings_img, command=self.open_settings,
+                relief="flat", bg=colors['bg'], activebackground=colors['bg'],
                 cursor="hand2", bd=0
             )
-            self.settings_btn.pack(side="right", padx=15, pady=10)
-            
-            # Hover effect
-            self.settings_btn.bind("<Enter>", lambda e: self.settings_btn.config(bg="#f8f9fa"))
-            self.settings_btn.bind("<Leave>", lambda e: self.settings_btn.config(bg="#ffffff"))
-            
-        except Exception as e:
-            print(f"Settings Icon not found: {e}")
-            tk.Button(toolbar, text="⚙️", command=self.open_settings, bd=0).pack(side="right", padx=15)
-            
+            self.settings_btn.pack(side="right", padx=(5, 15), pady=10) # Added right-side padding
+            self.theme_elements.append(self.settings_btn)
+        except: pass
+
+        # 2. TOGGLE BUTTON (Packed second = To the left of Settings)
+        self.theme_btn = tk.Button(
+            self.toolbar, text="🌙", command=self.toggle_theme,
+            relief="flat", bg=colors["bg"], fg=colors["text"], 
+            font=("Arial", 12), bd=0, cursor="hand2"
+        )
+        self.theme_btn.pack(side="right", padx=5)
+        self.theme_elements.append(self.theme_btn)
         ttk.Separator(self.root, orient='horizontal').pack(side="top", fill="x")
         
     def create_main(self):
         """"Creates the Main UI for Material Selection, Weight and Hours Input, and Calculate Button"""
-        content = tk.Frame(self.root, bg="White", padx=40, pady=30)
-        content.pack(expand=True, fill="both")
+        colors = THEMES[self.current_theme]
+        self.content_frame = tk.Frame(self.root, bg=colors["card"], padx=40, pady=30)
+        self.content_frame.pack(expand=True, fill="both")
         
-        tk.Label(content, text=" Job Details ", font=("Arial", 16, "bold"), bg="White").pack(anchor="w", pady=(0, 20))
+        def add_lbl(text, font=("Arial", 10), pady=0, is_header=False):
+            f = ("Arial", 16, "bold") if is_header else font
+            lbl = tk.Label(
+                self.content_frame, text=text, font=f, 
+                bg=colors["card"], fg=colors["text"])
+            lbl.pack(anchor="w", pady=pady)
+            self.theme_elements.append(lbl) # Register
+            return lbl
         
-        # Material Selection
-        tk.Label(content, text="Select Material:", bg="White").pack(anchor="w")
+        add_lbl("Job Details", pady=(0, 20), is_header=True)
+        
+        mat_lbl = tk.Label(
+            self.content_frame, text="Select Material:", 
+            bg=colors["card"], fg=colors["text"])
+        mat_lbl.pack(anchor="w")
+        self.theme_elements.append(mat_lbl)
+
+        # The Combobox Fix
         self.materials = database.get_all_materials()
         self.mat_names = [m[0] for m in self.materials]
-        self.mat_combo = ttk.Combobox(content, values = self.mat_names, state="readonly", font=("Arial", 10))
-        self.mat_combo.pack(fill="x",pady=(5,20))
         
-        # Weight Input
-        tk.Label(content, text = "Enter Weight (grams):", bg="White").pack()
-        self.weight_entry = ttk.Entry(content, font=("Arial", 10))
-        self.weight_entry.pack(fill="x",pady=(5,20))
+        self.mat_combo = ttk.Combobox(self.content_frame, values=self.mat_names, state="readonly")
+        self.mat_combo.pack(fill="x", pady=(5, 20))
+        # Important: Select the first item so it's not 'empty'
+        if self.mat_names:
+            self.mat_combo.current(0)
         
-        # Duration Input
-        tk.Label(content, text = "Enter Print Time (hours):", bg="White").pack()
-        self.hours_entry =ttk.Entry(content, font=("Arial", 10))
-        self.hours_entry.pack(fill="x",pady=(5,20))
+        add_lbl("Enter Weight (grams):")
+        self.weight_entry = ttk.Entry(self.content_frame)
+        self.weight_entry.pack(fill="x", pady=(5, 20))
         
-        # Calculate Button
-        calculate_btn = tk.Button(
-            content, text=" Calculate Cost ", command=self.calculate_cost,
-            bg="#4CAF50", fg="White", font=("Arial", 11, "bold"),
+        add_lbl("Enter Print Time (hours):")
+        self.hours_entry = ttk.Entry(self.content_frame)
+        self.hours_entry.pack(fill="x", pady=(5, 20))
+        
+        # Calculate Button - Always keeps its text white but changes BG color
+        self.calc_btn = tk.Button(
+            self.content_frame, text=" Calculate Cost ", command=self.calculate_cost,
+            bg=colors["accent"], fg="white", font=("Arial", 11, "bold"),
             relief="flat", height=2, cursor="hand2" 
         )
-        calculate_btn.pack(fill="x", pady=(0, 10))
+        self.calc_btn.pack(fill="x", pady=(0, 10))
+        self.theme_elements.append(self.calc_btn) # Register
         
         load_btn = tk.Button(
-            content, text="🔄 Load Last Job for Reprint", command=self.load_last_job,
-            bg="#f8f9fa", fg="#555", font=("Arial", 10),
+            self.content_frame, text="🔄 Load Last Job for Reprint", command=self.load_last_job,
+            bg=colors["accent"], fg=colors["text"], font=("Arial", 10),
             relief="flat", height=1, cursor="hand2" 
         )
         load_btn.pack(fill="x")
