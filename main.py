@@ -2,13 +2,14 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
-import os
-from datetime import datetime
 
 # Import Custom Modules
 import database
 import logic
-import export
+import report_handler
+from config import LOGO_PATH, SETTINGS_ICON 
+from settings import SettingsWindow
+from preview import PreviewWindow
 
 # Define Global Themes for Light and Dark Mode
 THEMES = {
@@ -30,6 +31,10 @@ THEMES = {
     }
 }
 
+logo_raw = Image.open(LOGO_PATH).resize((40, 40), Image.Resampling.LANCZOS)
+settings_raw = Image.open(SETTINGS_ICON).resize((25,25), Image.Resampling.LANCZOS)
+
+# Class Definition for Main Application
 class CalculatorApp:
     def __init__(self, root):
         self.root = root
@@ -48,15 +53,20 @@ class CalculatorApp:
         
         # Window Icon Setup
         try:
-            # Load the image using Pillow
-            icon_path = "assets/Logo.png" 
-            icon_img = Image.open(icon_path)
+            # Use the absolute path from config.py
+            from config import LOGO_PATH
+            from PIL import Image, ImageTk
+            
+            # Load and convert for Tkinter
+            icon_img = Image.open(LOGO_PATH)
             self.app_icon = ImageTk.PhotoImage(icon_img)
             
-            # Set the icon (True makes it apply to all popup windows too)
+            # Set the icon for the main window and all future Toplevels (True)
             self.root.iconphoto(True, self.app_icon)
+            
         except Exception as e:
-            print(f"Window icon failed to load: {e}")
+            # This will catch if the file is missing or path is wrong
+            print(f"Window icon failed to load from {LOGO_PATH}: {e}")
             
         # Apply Default Theme
         self.apply_theme()
@@ -66,89 +76,73 @@ class CalculatorApp:
         self.current_theme = "dark" if self.current_theme == "light" else "light"
         self.apply_theme()
         
+    def get_theme_colors(self):
+        """Helper for external files to fetch current palette"""
+        return THEMES[self.current_theme]
+    
     def apply_theme(self):
-        """Universal Paintbrush: Purple Toolbar | Black-to-Yellow Calculate Button"""
         colors = THEMES[self.current_theme]
         
-        # 1. Main Background and Card
+        # 1. Clean list and handle static containers immediately
+        self.theme_elements = [el for el in self.theme_elements if el.winfo_exists()]
+        
+        # Define a quick map for clarity
+        is_dark = self.current_theme == "dark"
+        accent_bg = colors["accent"] if is_dark else "#2C3E50"
+        accent_fg = "black" if is_dark else "white"
+        
+        # Backgrounds that always behave the same
         self.root.configure(bg=colors["bg"])
+        self.toolbar.configure(bg=colors["secondary"])
         self.content_frame.configure(bg=colors["card"])
-        
-        # 2. TOOLBAR: Always Penelope Indigo (#5758BB)
-        toolbar_color = colors["secondary"] 
-        self.toolbar.configure(bg=toolbar_color)
 
-        # 3. Handle Icons and Logo backgrounds to match the purple toolbar
+        # Update Theme Toggle Icon specifically
         if hasattr(self, 'theme_btn'):
-            new_icon = "☀️" if self.current_theme == "dark" else "🌙"
-            self.theme_btn.configure(text=new_icon, bg=toolbar_color, fg="white")
-            
-        if hasattr(self, 'settings_btn'):
-            self.settings_btn.configure(bg=toolbar_color, activebackground=toolbar_color)
-            
-        if hasattr(self, 'logo_label'):
-            self.logo_label.configure(bg=toolbar_color)
+            self.theme_btn.configure(text="☀️" if is_dark else "🌙")
 
-        # 4. Loop through registered elements
-        for element in self.theme_elements:
+        # 2. THE UNIVERSAL LOOP (One pass for everything)
+        for el in self.theme_elements:
             try:
-                if element.winfo_exists():
-                    # If it's in the toolbar, match the purple
-                    if element.master == self.toolbar:
-                        element.configure(bg=toolbar_color, fg="white")
-                    else:
-                        # Otherwise, match the main card/bg colors
-                        element.configure(bg=colors["card"], fg=colors["text"])
+                # --- WINDOWS / FRAMES ---
+                if isinstance(el, (tk.Toplevel, tk.Frame)):
+                    # If it's a breakdown window/frame, use card color, else standard bg
+                    title = el.winfo_toplevel().title()
+                    bg = colors["card"] if "Breakdown" in title else colors["bg"]
+                    el.configure(bg=bg)
+
+                # --- LABELS ---
+                elif isinstance(el, tk.Label):
+                    # Inherit from parent floor
+                    p_bg = el.master.cget("bg")
+                    el.configure(bg=p_bg, fg=colors["text"])
+
+                # --- BUTTONS ---
+                elif isinstance(el, tk.Button):
+                    txt = el.cget("text").lower()
                     
-                    # 5. SPECIAL CASE: CALCULATE BUTTON COLOR SWAP
-                    if isinstance(element, tk.Button) and "Calculate" in element.cget("text"):
-                        if self.current_theme == "dark":
-                            # HAZENTHLEY YELLOW: Yellow background, Black text
-                            element.configure(
-                                bg=colors["accent"],  # #F1C40F
-                                fg="black", 
-                                activebackground="#D4AC0D" # Slightly darker yellow for hover
-                            )
-                        else:
-                            # PENELOPE BLACK/NAVY: Dark background, White text
-                            element.configure(
-                                bg="#2C3E50", 
-                                fg="white", 
-                                activebackground="#34495E"
-                            )
-            except:
+                    # Logic Switchboard
+                    if any(k in txt for k in ["calculate", "save", "load"]):
+                        el.configure(bg=accent_bg, fg=accent_fg)
+                    elif any(k in txt for k in ["export", "report"]) or el.master == self.toolbar:
+                        el.configure(bg=colors["secondary"], fg="white")
+                    elif "add" in txt:
+                        el.configure(bg="#27ae60", fg="white")
+                    
+                    # Global button cleanup (removes ugly hover borders)
+                    el.configure(activebackground=el.cget("bg"))
+                    
+                elif isinstance(el, tk.Entry):
+                    # In Dark Mode: Dark grey background with white text
+                    # In Light Mode: White background with black text
+                    bg = "#2f3640" if self.current_theme == "dark" else "white"
+                    fg = "white" if self.current_theme == "dark" else "black"
+                    el.configure(bg=bg, fg=fg, insertbackground=fg) # insertbackground is the cursor color
+
+            except Exception:
                 continue
-        
-    # Load Last Job Data into Input Fields for Quick Reprint
-    def load_last_job(self):
-        last = database.get_last_receipt()
-        if last:
-            mat_name, weight, hours = last
-            self.mat_combo.set(mat_name)
-            self.weight_entry.delete(0, tk.END)
-            self.weight_entry.insert(0, str(weight))
-            self.hours_entry.delete(0, tk.END)
-            self.hours_entry.insert(0, str(hours))
-            messagebox.showinfo("Loaded", "Last job data filled.")
-        else:
-            messagebox.showwarning("Empty", "No previous orders found.")
             
     def generate_report(self):
-        from datetime import datetime
-        # Get current month and year automatically
-        now = datetime.now()
-        m = now.strftime('%m') 
-        y = now.strftime('%Y')
-        
-        data = database.get_monthly_records(m, y)
-        
-        if not data:
-            messagebox.showwarning("No Data", f"No orders found for {m}/{y}.")
-            return
-        
-        filepath = export.export_to_excel(m, y, data)
-        
-        messagebox.showinfo("Report Exported", f"Monthly report saved successfully!\nLocation: {'Reports'}")
+        report_handler.generate_monthly_report()
         
     def create_toolbar(self):
         """Creates top icon toolbar for quick access to settings and receipt history"""
@@ -158,7 +152,7 @@ class CalculatorApp:
         
         # --- LEFT SIDE: Logo & Title ---
         try:
-            logo_raw = Image.open("assets/Logo.png").resize((30, 30), Image.Resampling.LANCZOS)
+            logo_raw = Image.open("Assets/Logo.png").resize((40, 40), Image.Resampling.LANCZOS)
             self.logo_img = ImageTk.PhotoImage(logo_raw)
             self.logo_label = tk.Label(self.toolbar, image=self.logo_img, bg=colors['bg'])
             self.logo_label.pack(side="left", padx=(15, 5), pady=10)
@@ -228,12 +222,14 @@ class CalculatorApp:
             self.mat_combo.current(0)
         
         add_lbl("Enter Weight (grams):")
-        self.weight_entry = ttk.Entry(self.content_frame)
+        self.weight_entry = tk.Entry(self.content_frame, relief="flat", font=("Arial", 11))
         self.weight_entry.pack(fill="x", pady=(5, 20))
+        self.theme_elements.append(self.weight_entry) # Add to registry!
         
         add_lbl("Enter Print Time (hours):")
-        self.hours_entry = ttk.Entry(self.content_frame)
+        self.hours_entry = tk.Entry(self.content_frame, relief="flat", font=("Arial", 11))
         self.hours_entry.pack(fill="x", pady=(5, 20))
+        self.theme_elements.append(self.hours_entry) # Add to registry!
         
         # Calculate Button - Always keeps its text white but changes BG color
         self.calc_btn = tk.Button(
@@ -250,16 +246,34 @@ class CalculatorApp:
             relief="flat", height=1, cursor="hand2" 
         )
         load_btn.pack(fill="x")
+        # CRITICAL: Add this line so the theme loop can find it
+        self.theme_elements.append(load_btn)
     
     # Refresh Materials List in Dropdown after Adding new Material
-    def refresh_materials(self):
-        """Reloads materials from DB and updates the dropdown menu"""
+    def refresh_material_dropdown(self):
+        """Re-pulls materials from DB and updates the combobox without losing selection."""
+        import database
+        
+        # 1. Capture what was selected BEFORE the refresh
+        current_selection = self.mat_combo.get()
+        
+        # 2. Get the new data
         self.materials = database.get_all_materials()
         self.mat_names = [m[0] for m in self.materials]
+        
+        # 3. Update the UI values
         self.mat_combo['values'] = self.mat_names
-        # Optional: Select the newest material automatically
-        if self.mat_names:
-            self.mat_combo.set(self.mat_names[-1])
+        
+        # 4. Smart Selection Logic
+        if current_selection in self.mat_names:
+            # If what they had selected still exists, keep it selected
+            self.mat_combo.set(current_selection)
+        elif self.mat_names:
+            # Otherwise, if there are materials, pick the first one
+            self.mat_combo.current(0)
+        else:
+            # If the database is now empty, clear the box
+            self.mat_combo.set('')
     
     # Logic Implementation for Cost Calculation
     def calculate_cost(self):
@@ -286,196 +300,30 @@ class CalculatorApp:
             total_cost, rate_label = logic.calculate_cost(w, h, mat_data, settings)
             
             # Open Preview Window 
-            self.show_preview(name, w, h, rate_label, total_cost, order_id)
+            PreviewWindow(self, name, w, h, rate_label, total_cost, order_id)
             
         except ValueError:
             messagebox.showerror("Invalid Input", "Please enter valid numbers for weight and hours.")
         except Exception as e:
             messagebox.showerror("Unexpected Error", f"Something went wrong: {e}")
     
-    # Function to Show Cost Breakdown and Receipt Generation Option
-    def show_preview(self, mat, w, h, rate_label, total_cost, order_id):
-        """Top Level Function to Show Cost Breakdown and Receipt Generation Option"""
-        preview = tk.Toplevel(self.root)
-        preview.title(f"Cost Breakdown - Order # {order_id}")
-        preview.geometry("400x520")
-        preview.configure(padx=30, pady=20)
-        
-        # Receipt Format
-        header = f"3d Print Job Cost Breakdown \n---------------------------- \nDate: {datetime.now().strftime('%Y-%m-%d')}"
-        body = f"\nMaterial: {mat} \nWeight: {w:.0f}g \nPrint Time: {h:.2f} hrs \n\nRate: {rate_label}\n"
-        footer = f"\n----------------------------\n TOTAL: Php {total_cost:.2f} \n----------------------------\n Thank you!"
-        
-        tk.Label(preview, text=header + body + footer, font=("Courier", 12), justify="left").pack(pady=20)
-        
-        # Unique FileName for Receipt Export
-        f_base = f"Receipt_Order_{order_id}_{mat}"
-        
-        # Export Logic
-        def handle_export(export_type):
-            """Internal helper to manage file generation and DB Logging"""
-            try:
-                # Set extension and full filename based on export type
-                ext= ".pdf" if export_type == "PDF" else ".png"
-                filename_full = f_base + ext
-                
-                # Call Export Module to Generate File
-                if export_type == "PDF":
-                    export.generate_pdf(f_base, mat, w, h, rate_label, total_cost)
-                else: 
-                    export.generate_png(f_base, mat, w, h, rate_label, total_cost)
-                    
-                # Save Receipt Data to Database
-                data = f"Tier: {rate_label}"
-                database.save_receipt(data, filename_full, mat, w, h, total_cost)
-                
-                messagebox.showinfo("Export Successful", f"Order #{order_id} exported as {export_type}")
-                preview.destroy() # Close Preview after Export
-                
-            except Exception as e:
-                messagebox.showerror("Export Failed", f"Failed to export {export_type}: {e}")
-                
-        # Export Buttons
-        btn_container = tk.Frame(preview)
-        btn_container.pack(pady=10)
-        
-        # PDF Export Button
-        pdf_btn = tk.Button(
-            btn_container, text="📄 Export as PDF",
-            command=lambda: handle_export("PDF"),
-            bg="#2c3e50", fg="white", font=("Arial", 10, "bold"),
-            width=20, pady=8, cursor="hand2", relief="flat"
-        )
-        pdf_btn.pack(pady=5)
-        
-        # PNG Export Button
-        img_btn = tk.Button(
-            btn_container, text="🖼️ Save as Image", 
-            command=lambda: handle_export("Image"),
-            bg="#27ae60", fg="white", font=("Arial", 10, "bold"),
-            width=20, pady=8, cursor="hand2", relief="flat"
-        )        
-        img_btn.pack(pady=5)
+    # Load Last Job Data into Input Fields for Quick Reprint
+    def load_last_job(self):
+        last = database.get_last_receipt()
+        if last:
+            mat_name, weight, hours = last
+            self.mat_combo.set(mat_name)
+            self.weight_entry.delete(0, tk.END)
+            self.weight_entry.insert(0, str(weight))
+            self.hours_entry.delete(0, tk.END)
+            self.hours_entry.insert(0, str(hours))
+            messagebox.showinfo("Loaded", "Last job data filled.")
+        else:
+            messagebox.showwarning("Empty", "No previous orders found.")
     
     def open_settings(self):
         """Creates a Settings Window to Update Meralco Rate and Setup Fee"""
-        settings_win = tk.Toplevel(self.root)
-        settings_win.title("Settings")
-        settings_win.geometry("400x650")
-        settings_win.configure(padx=20, pady=20)
-        
-        # Fetch Current Settings from Database
-        current_settings = database.get_settings()
-        # current setting is (Meralco Rate, Setup Fee)
-        
-        tk.Label(settings_win, text="Update Settings", font=("Arial", 14, "bold")).pack(pady=(0, 15))
-        
-        # Meralco Rate Input
-        tk.Label(settings_win, text="Meralco Rate (Php/kWh):").pack(anchor="w")
-        rate_entry = ttk.Entry(settings_win, font=("Arial", 10))
-        rate_entry.insert(0, str(current_settings[0]))
-        rate_entry.pack(fill="x", pady=(5, 15))
-        
-        # Setup Fee Input
-        tk.Label(settings_win, text="Setup Fee (Php):").pack(anchor="w")
-        fee_entry = ttk.Entry(settings_win, font=("Arial", 10))
-        fee_entry.insert(0, str(current_settings[1]))
-        fee_entry.pack(fill="x", pady=(5, 25))
-        
-        # Material Management Button
-        ttk.Separator(settings_win, orient='horizontal').pack(fill="x", pady=20)
-        tk.Label(settings_win, text="Add New Material", font=("Arial", 12, "bold")).pack(anchor="w")
-        
-        tk.Label(settings_win, text="Material Name:").pack(anchor="w")
-        new_mat_name = ttk.Entry(settings_win)
-        new_mat_name.pack(fill="x")
-
-        tk.Label(settings_win, text="Wattage (W):").pack(anchor="w")
-        new_mat_watt = ttk.Entry(settings_win)
-        new_mat_watt.pack(fill="x")
-
-        tk.Label(settings_win, text="Price per Gram (Php):").pack(anchor="w")
-        new_mat_price = ttk.Entry(settings_win)
-        new_mat_price.pack(fill="x")
-
-        def add_mat_logic():
-            try:
-                n = new_mat_name.get()
-                w = float(new_mat_watt.get())
-                p = float(new_mat_price.get())
-                if n:
-                    database.add_material(n, w, p)
-                    messagebox.showinfo("Success", f"{n} added!")
-                    self.refresh_materials() # Update the main dropdown
-                    settings_win.destroy()
-            except:
-                messagebox.showerror("Error", "Invalid Material Data")
-
-        tk.Button(settings_win, text="+ Add Material", command=add_mat_logic, 
-            bg="#27ae60", fg="white", relief="flat").pack(fill="x", pady=10)
-        
-        ttk.Separator(settings_win, orient='horizontal').pack(fill="x", pady=20)
-        tk.Label(settings_win, text="Business Reports", font=("Arial", 12, "bold")).pack(anchor="w")
-        
-        # Report Generation Logic
-        def run_report_logic():
-            # Get current Month and Year
-            from datetime import datetime
-            now = datetime.now()
-            m = now.strftime('%m')
-            y = now.strftime('%Y')
-
-            # Fetch data from DB
-            report_data = database.get_monthly_records(m, y)
-            
-            if not report_data:
-                messagebox.showwarning("No Data", f"No orders found for {m}/{y}.")
-                return
-
-            # Trigger the Excel/CSV export from export.py
-            filepath = export.export_to_excel(m, y, report_data)
-            messagebox.showinfo("Success", f"Monthly Report Exported!\nLocation: {filepath}")
-
-        # The Export Button (Blue color to distinguish it from "Add" or "Save")
-        report_btn = tk.Button(
-            settings_win, text="📊 Export Monthly Report (Excel)", 
-            command=run_report_logic,
-            bg="#3498db", fg="white", font=("Arial", 10, "bold"),
-            height=2, relief="flat", cursor="hand2"
-        )
-        report_btn.pack(fill="x", pady=10)
-        
-        # Save Logic
-        def save_new_settings():
-            try:
-                # Get new values from entries
-                new_rate = float(rate_entry.get())
-                new_fee = float(fee_entry.get())
-                
-                # Validation for positive numbers
-                if new_rate <= 0 or new_fee < 0:
-                    messagebox.showwarning("Invalid Input", "Please enter valid positive numbers.")
-                    return
-                
-                # Update Settings in Database
-                database.update_settings(new_rate, new_fee)
-                
-                # Confirmation Message
-                messagebox.showinfo("Settings Updated", "Rates have been updated successfully!")
-                settings_win.destroy()
-                
-            except ValueError:
-                messagebox.showerror("Invalid Input", "Please enter valid numbers for rates.")
-            except Exception as e:
-                messagebox.showerror("Error", f"An error occurred: {e}")
-            
-        # Save Button
-        save_btn = tk.Button(
-            settings_win, text="Save Settings", command=save_new_settings,
-            bg="#2980b9", fg="white", font=("Arial", 11, "bold"),
-            relief="flat", width=20, pady=8, cursor="hand2" 
-        )
-        save_btn.pack(fill="x")
+        SettingsWindow(self)
 
 # Start Application
 if __name__ == "__main__":
