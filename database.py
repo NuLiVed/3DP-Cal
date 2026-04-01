@@ -7,58 +7,45 @@ def get_connection():
     return sqlite3.connect(DB_PATH)
 
 def initialize_database():
-    # We use get_connection() to ensure we use the correct path every time
+    # Use a direct connection here to manage the PRAGMAs safely
     conn = get_connection()
-    cursor = conn.cursor()
-    
-    # WAL mode improves performance and prevents "Database Locked" errors
-    cursor.execute("PRAGMA journal_mode=WAL;")
-    
-    # 1. Settings Table
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS settings (
-            id INTEGER PRIMARY KEY,
-            meralco_rate REAL,
-            setup_fee REAL
-        )
-    ''')
-    
-    # 2. Materials Table
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS materials (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT UNIQUE,
-            wattage REAL,
-            price_per_g REAL
-        )
-    ''')
-    
-    # 3. Receipts Table
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS receipts (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            data TEXT,
-            filename TEXT,
-            material TEXT,
-            weight REAL,
-            hours REAL,
-            total_cost REAL,
-            date_timestamp TEXT
-        )
-    ''')
-    
-    # --- Default Data Injection ---
-    cursor.execute("SELECT COUNT(*) FROM settings")
-    if cursor.fetchone()[0] == 0:
-        cursor.execute("INSERT INTO settings (id, meralco_rate, setup_fee) VALUES (1, 20.0, 50.0)")
+    try:
+        cursor = conn.cursor()
         
-    cursor.execute("SELECT COUNT(*) FROM materials")
-    if cursor.fetchone()[0] == 0:
-        default_materials = [("PLA", 120.0, 1.56), ("PETG", 140.0, 2.47)]
-        cursor.executemany("INSERT INTO materials (name, wattage, price_per_g) VALUES (?, ?, ?)", default_materials)
+        # 1. Tables Setup
+        cursor.execute('''CREATE TABLE IF NOT EXISTS settings (
+                            id INTEGER PRIMARY KEY,
+                            meralco_rate REAL,
+                            setup_fee REAL)''')
+                            
+        cursor.execute('''CREATE TABLE IF NOT EXISTS materials (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            name TEXT UNIQUE,
+                            wattage REAL,
+                            price_per_g REAL)''')
+                            
+        cursor.execute('''CREATE TABLE IF NOT EXISTS receipts (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            data TEXT, filename TEXT, material TEXT,
+                            weight REAL, hours REAL, total_cost REAL,
+                            date_timestamp TEXT)''')
         
-    conn.commit()
-    conn.close()
+        # 2. Default Data Injection
+        cursor.execute("SELECT COUNT(*) FROM settings")
+        if cursor.fetchone()[0] == 0:
+            cursor.execute("INSERT INTO settings (id, meralco_rate, setup_fee) VALUES (1, 20.0, 50.0)")
+            
+        cursor.execute("SELECT COUNT(*) FROM materials")
+        if cursor.fetchone()[0] == 0:
+            default_materials = [("PLA", 120.0, 1.56), ("PETG", 140.0, 2.47)]
+            cursor.executemany("INSERT INTO materials (name, wattage, price_per_g) VALUES (?, ?, ?)", default_materials)
+            
+        conn.commit()
+    except Exception as e:
+        print(f"Database Init Error: {e}")
+        conn.rollback()
+    finally:
+        conn.close()
 
 # --- DRY (Don't Repeat Yourself) Refactor ---
 # Use get_connection() in all functions below to avoid path errors
@@ -80,10 +67,11 @@ def add_material(name, wattage, price_per_g):
         except sqlite3.IntegrityError:
             print(f"Material '{name}' already exists.")
 
-def delete_material(name):
+def delete_material(material_name):
+    """Removes a material from the database by its unique name."""
     with get_connection() as conn:
         cursor = conn.cursor()
-        cursor.execute("DELETE FROM materials WHERE name = ?", (name,))
+        cursor.execute("DELETE FROM materials WHERE name = ?", (material_name,))
         conn.commit()
 
 def get_settings():

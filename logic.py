@@ -17,12 +17,12 @@ def calculate_cost(weight, hours, material_data, global_settings):
     # Filament Cost
     # Multiplier based on weight: 2.0 for <100g, 1.5 for >=100g
     multiplier = 2.0 if weight < 100 else 1.5
-    filament_cost = weight * (price_per_g * multiplier)
+    filament_cost = weight * multiplier
     
     # Machine Rate based on hours
     match hours:
         case h if h <= (4 + buffer):
-            machine_rate, rate_label = 70, "Short Print (0-4 hrs)"
+            machine_rate, rate_label = 74, "Short Print (0-4 hrs)"
         case h if h <= (10 + buffer):
             machine_rate, rate_label = 90, "Short Print (5-10 hrs)"
         case h if h <= (20 + buffer):

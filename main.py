@@ -7,6 +7,7 @@ from PIL import Image, ImageTk
 import database
 import logic
 import report_handler
+from material_manager import MaterialManagerWindow
 from config import LOGO_PATH, SETTINGS_ICON 
 from settings import SettingsWindow
 from preview import PreviewWindow
@@ -164,7 +165,23 @@ class CalculatorApp:
         self.theme_elements.append(self.title_lbl)
 
         # --- RIGHT SIDE (Packed in order of priority) ---
-
+        
+        try: 
+            # 1. Setup Manage Materials Button
+            mat_raw = Image.open("Assets/materials_icon.png").resize((25,25), Image.Resampling.LANCZOS)
+            self.mat_img = ImageTk.PhotoImage(mat_raw)
+            self.mat_btn = tk.Button(
+                self.toolbar, image=self.mat_img, command=self.open_materials_mgr,
+                relief="flat", bg=colors['bg'], activebackground=colors['bg'],
+                cursor="hand2", bd=0
+            )
+            # Pack it to the right, but with less right-padding so it stays next to settings
+            self.mat_btn.pack(side="right", padx=5, pady=10) 
+            self.theme_elements.append(self.mat_btn)
+        except Exception as e: 
+            print(f"Icon Load Error: {e}") 
+            pass
+        
         # 1. SETTINGS BUTTON (Packed first = Far Right)
         try: 
             settings_raw = Image.open("Assets/settings_icon.png").resize((25,25), Image.Resampling.LANCZOS)
@@ -248,31 +265,25 @@ class CalculatorApp:
         load_btn.pack(fill="x")
         # CRITICAL: Add this line so the theme loop can find it
         self.theme_elements.append(load_btn)
-    
-    # Refresh Materials List in Dropdown after Adding new Material
+        
     def refresh_material_dropdown(self):
         """Re-pulls materials from DB and updates the combobox without losing selection."""
-        import database
-        
-        # 1. Capture what was selected BEFORE the refresh
+        # 1. Capture selection
         current_selection = self.mat_combo.get()
         
-        # 2. Get the new data
+        # 2. Get data (Assuming database is imported at top of file)
         self.materials = database.get_all_materials()
         self.mat_names = [m[0] for m in self.materials]
         
-        # 3. Update the UI values
+        # 3. Update UI
         self.mat_combo['values'] = self.mat_names
         
-        # 4. Smart Selection Logic
+        # 4. Smart Selection
         if current_selection in self.mat_names:
-            # If what they had selected still exists, keep it selected
             self.mat_combo.set(current_selection)
         elif self.mat_names:
-            # Otherwise, if there are materials, pick the first one
             self.mat_combo.current(0)
         else:
-            # If the database is now empty, clear the box
             self.mat_combo.set('')
     
     # Logic Implementation for Cost Calculation
@@ -324,6 +335,10 @@ class CalculatorApp:
     def open_settings(self):
         """Creates a Settings Window to Update Meralco Rate and Setup Fee"""
         SettingsWindow(self)
+        
+    def open_materials_mgr(self):
+            """Creates a Material Manager Window to Add or Remove Materials from the Database"""
+            MaterialManagerWindow( self)
 
 # Start Application
 if __name__ == "__main__":
