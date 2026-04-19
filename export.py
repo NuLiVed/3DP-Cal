@@ -22,12 +22,12 @@ def generate_pdf(f_base, mat, w, h, rate_label, total_cost):
     lines = [
         f"Order ID:   {f_base.split('_')[1]}",
         f"Material:   {mat}",
-        f"Weight:     {w:.0f}g",
-        f"Print Time: {h:.2f} hrs",
+        f"Weight:     {float(w):.2f}g",
+        f"Print Time: {float(h):.2f} hrs",
         "",
         f"Rate Tier: {rate_label}",
         "----------------------------------",
-        f"TOTAL COST: Php {total_cost:.2f}",
+        f"TOTAL COST: Php {float(total_cost):.2f}",
         "----------------------------------"
     ]
 
@@ -62,7 +62,7 @@ def generate_png(f_base, mat, w, h, rate_label, total_cost):
     content = [
         f"Order: #{f_base.split('_')[1]}",
         f"Material: {mat}",
-        f"Weight: {w:.0f}g",
+        f"Weight: {w:.2f}g",
         f"Time: {h:.2f} hrs",
         "",
         f"Tier: {rate_label}",

@@ -31,7 +31,7 @@ class PreviewWindow:
         
         # --- RECEIPT FORMATTING ---
         header = f"3d Print Job Cost Breakdown \n{'-'*28} \nDate: {datetime.now().strftime('%Y-%m-%d')}"
-        body = f"\nMaterial: {mat} \nWeight: {w:.0f}g \nPrint Time: {h:.2f} hrs \n\nRate: {rate_label}\n"
+        body = f"\nMaterial: {mat} \nWeight: {w:.2f}g \nPrint Time: {h:.2f} hrs \n\nRate: {rate_label}\n"
         footer = f"\n{'-'*28}\n TOTAL: Php {total_cost:.2f} \n{'-'*28}\n Thank you!"
         
         # Main Receipt Label

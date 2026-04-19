@@ -24,11 +24,11 @@ def calculate_cost(weight, hours, material_data, global_settings):
         case h if h <= (4 + buffer):
             machine_rate, rate_label = 74, "Short Print (0-4 hrs)"
         case h if h <= (10 + buffer):
-            machine_rate, rate_label = 90, "Short Print (5-10 hrs)"
+            machine_rate, rate_label = 90, "Medium Print (5-10 hrs)"
         case h if h <= (20 + buffer):
-            machine_rate, rate_label = 120, "Short Print (10-20 hrs)"
+            machine_rate, rate_label = 120, "Long Print (10-20 hrs)"
         case _:
-            machine_rate, rate_label = 150, "Short Print (20+ hrs)"    
+            machine_rate, rate_label = 150, "Extra Long Print (20+ hrs)"    
             
     # Electricity Cost
     electricity_cost = (wattage / 1000) * m_rate * hours

@@ -97,7 +97,7 @@ def get_next_order_id():
         cursor = conn.cursor()
         cursor.execute("SELECT MAX(id) FROM receipts")
         last_id = cursor.fetchone()[0]
-        return (last_id + 1) if last_id else 100
+        return (last_id + 1) if last_id else 1
 
 def save_receipt(data, filename, material, weight, hours, total_cost):
     with get_connection() as conn:

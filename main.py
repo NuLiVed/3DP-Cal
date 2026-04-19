@@ -1,5 +1,7 @@
 # Call required libraries
 import tkinter as tk
+import sys
+import os
 from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 
@@ -32,8 +34,13 @@ THEMES = {
     }
 }
 
-logo_raw = Image.open(LOGO_PATH).resize((40, 40), Image.Resampling.LANCZOS)
-settings_raw = Image.open(SETTINGS_ICON).resize((25,25), Image.Resampling.LANCZOS)
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+
+logo_raw = Image.open(resource_path(LOGO_PATH)).resize((40, 40), Image.Resampling.LANCZOS)
+settings_raw = Image.open(resource_path(SETTINGS_ICON)).resize((25,25), Image.Resampling.LANCZOS)
 
 # Class Definition for Main Application
 class CalculatorApp:
@@ -153,7 +160,9 @@ class CalculatorApp:
         
         # --- LEFT SIDE: Logo & Title ---
         try:
-            logo_raw = Image.open("Assets/Logo.png").resize((40, 40), Image.Resampling.LANCZOS)
+            # Wrap path in resource_path()
+            logo_path = resource_path("Assets/Logo.png")
+            logo_raw = Image.open(logo_path).resize((40, 40), Image.Resampling.LANCZOS)
             self.logo_img = ImageTk.PhotoImage(logo_raw)
             self.logo_label = tk.Label(self.toolbar, image=self.logo_img, bg=colors['bg'])
             self.logo_label.pack(side="left", padx=(15, 5), pady=10)
@@ -166,36 +175,37 @@ class CalculatorApp:
 
         # --- RIGHT SIDE (Packed in order of priority) ---
         
+        # 1. SETTINGS BUTTON (Packed Far Right)
         try: 
-            # 1. Setup Manage Materials Button
-            mat_raw = Image.open("Assets/materials_icon.png").resize((25,25), Image.Resampling.LANCZOS)
-            self.mat_img = ImageTk.PhotoImage(mat_raw)
-            self.mat_btn = tk.Button(
-                self.toolbar, image=self.mat_img, command=self.open_materials_mgr,
-                relief="flat", bg=colors['bg'], activebackground=colors['bg'],
-                cursor="hand2", bd=0
-            )
-            # Pack it to the right, but with less right-padding so it stays next to settings
-            self.mat_btn.pack(side="right", padx=5, pady=10) 
-            self.theme_elements.append(self.mat_btn)
-        except Exception as e: 
-            print(f"Icon Load Error: {e}") 
-            pass
-        
-        # 1. SETTINGS BUTTON (Packed first = Far Right)
-        try: 
-            settings_raw = Image.open("Assets/settings_icon.png").resize((25,25), Image.Resampling.LANCZOS)
+            settings_path = resource_path("Assets/settings_icon.png")
+            settings_raw = Image.open(settings_path).resize((25,25), Image.Resampling.LANCZOS)
             self.settings_img = ImageTk.PhotoImage(settings_raw)
             self.settings_btn = tk.Button(
                 self.toolbar, image=self.settings_img, command=self.open_settings,
                 relief="flat", bg=colors['bg'], activebackground=colors['bg'],
                 cursor="hand2", bd=0
             )
-            self.settings_btn.pack(side="right", padx=(5, 15), pady=10) # Added right-side padding
+            self.settings_btn.pack(side="right", padx=(5, 15), pady=10) 
             self.theme_elements.append(self.settings_btn)
-        except: pass
+        except Exception as e:
+            print(f"Settings Icon Error: {e}")
 
-        # 2. TOGGLE BUTTON (Packed second = To the left of Settings)
+        # 2. MANAGE MATERIALS BUTTON
+        try: 
+            mat_path = resource_path("Assets/materials_icon.png")
+            mat_raw = Image.open(mat_path).resize((25,25), Image.Resampling.LANCZOS)
+            self.mat_img = ImageTk.PhotoImage(mat_raw)
+            self.mat_btn = tk.Button(
+                self.toolbar, image=self.mat_img, command=self.open_materials_mgr,
+                relief="flat", bg=colors['bg'], activebackground=colors['bg'],
+                cursor="hand2", bd=0
+            )
+            self.mat_btn.pack(side="right", padx=5, pady=10) 
+            self.theme_elements.append(self.mat_btn)
+        except Exception as e: 
+            print(f"Materials Icon Error: {e}") 
+
+        # 3. TOGGLE THEME BUTTON
         self.theme_btn = tk.Button(
             self.toolbar, text="🌙", command=self.toggle_theme,
             relief="flat", bg=colors["bg"], fg=colors["text"], 
@@ -203,6 +213,7 @@ class CalculatorApp:
         )
         self.theme_btn.pack(side="right", padx=5)
         self.theme_elements.append(self.theme_btn)
+        
         ttk.Separator(self.root, orient='horizontal').pack(side="top", fill="x")
         
     def create_main(self):
