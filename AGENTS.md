@@ -17,8 +17,8 @@ At runtime, the app creates `Data/`, `Receipts/`, and `Reports/` beside the scri
 ## Build, Test, and Development Commands
 
 - `python main.py` runs the desktop app locally.
-- `python -m py_compile *.py` performs a quick syntax check across modules.
-- `python -m pip install pillow reportlab` installs the non-stdlib dependencies used by image and PDF export.
+- `python -m compileall main.py logic.py database.py config.py export.py report_handler.py settings.py material_manager.py preview.py tests` performs a cross-platform syntax check.
+- `python -m pip install -r requirements.txt` installs app and test dependencies.
 - `pyinstaller --onefile --windowed --add-data "Assets:assets" main.py` builds a standalone app on Linux/macOS-style shells. On Windows, use `Assets;assets` for the `--add-data` separator.
 
 ## Coding Style & Naming Conventions
@@ -27,7 +27,7 @@ Use Python 3 with 4-space indentation. Keep module names lowercase with undersco
 
 ## Testing Guidelines
 
-There is no automated test suite yet. For logic changes, add focused `pytest` tests under a new `tests/` directory, using names like `test_logic.py` and `test_calculates_total_cost()`. For UI or export changes, at minimum run `python main.py`, calculate a sample receipt, export PNG/PDF output, and generate a monthly report when records exist.
+Automated tests use `pytest` and currently focus on pricing logic under `tests/`. For logic changes, add focused tests using names like `test_logic.py` and `test_calculates_total_cost()`. For UI or export changes, at minimum run `python main.py`, calculate a sample receipt, export PNG/PDF output, and generate a monthly report when records exist.
 
 ## Commit & Pull Request Guidelines
 
@@ -36,3 +36,16 @@ Existing commits use short, imperative summaries, for example `Create README.md`
 ## Security & Configuration Tips
 
 Do not commit generated `Data/`, `Receipts/`, or `Reports/` contents. Keep database writes parameterized as in `database.py`, and route new filesystem paths through `config.py` so development and PyInstaller builds behave consistently.
+
+## graphify
+
+This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
+
+When the user types `/graphify`, use the installed graphify skill or instructions before doing anything else.
+
+Rules:
+- For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
+- Dirty graphify-out/ files are expected after hooks or incremental updates; dirty graph files are not a reason to skip graphify. Only skip graphify if the task is about stale or incorrect graph output, or the user explicitly says not to use it.
+- If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
+- Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
+- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
