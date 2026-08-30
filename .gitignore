@@ -5,11 +5,11 @@ __pycache__/
 
 # Database (Keep your local data private)
 data/*.db
+Data/
+Receipts/
+Reports/
 
 # Build files
 dist/
 build/
 *.spec
-
-# Generated receipt images
-Receipts/*.png

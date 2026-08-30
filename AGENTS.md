@@ -17,8 +17,8 @@ At runtime, the app creates `Data/`, `Receipts/`, and `Reports/` beside the scri
 ## Build, Test, and Development Commands
 
 - `python main.py` runs the desktop app locally.
-- `python -m py_compile *.py` performs a quick syntax check across modules.
-- `python -m pip install pillow reportlab` installs the non-stdlib dependencies used by image and PDF export.
+- `python -m compileall main.py logic.py database.py config.py export.py report_handler.py settings.py material_manager.py preview.py tests` performs a cross-platform syntax check.
+- `python -m pip install -r requirements.txt` installs app and test dependencies.
 - `pyinstaller --onefile --windowed --add-data "Assets:assets" main.py` builds a standalone app on Linux/macOS-style shells. On Windows, use `Assets;assets` for the `--add-data` separator.
 
 ## Coding Style & Naming Conventions
