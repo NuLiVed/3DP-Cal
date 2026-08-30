@@ -1,0 +1,62 @@
+{
+  "config.py": {
+    "mtime": 1788084265.21,
+    "ast_hash": "e21e7dde7e82aa6ea1f5be61fb578c46",
+    "semantic_hash": "e21e7dde7e82aa6ea1f5be61fb578c46"
+  },
+  "database.py": {
+    "mtime": 1788083950.85,
+    "ast_hash": "b6ebc08f7a5f396ada9ac154d19bbf28",
+    "semantic_hash": "b6ebc08f7a5f396ada9ac154d19bbf28"
+  },
+  "export.py": {
+    "mtime": 1788083950.85,
+    "ast_hash": "d80f5dd0ec2f4d2d4562b792aa241dca",
+    "semantic_hash": "d80f5dd0ec2f4d2d4562b792aa241dca"
+  },
+  "logic.py": {
+    "mtime": 1788083950.85,
+    "ast_hash": "4de26b0b67207badce47427f19e3faea",
+    "semantic_hash": "4de26b0b67207badce47427f19e3faea"
+  },
+  "main.py": {
+    "mtime": 1788083950.85,
+    "ast_hash": "2bd543c9baa80f4c305cc4351f5a080e",
+    "semantic_hash": "2bd543c9baa80f4c305cc4351f5a080e"
+  },
+  "material_manager.py": {
+    "mtime": 1788083950.85,
+    "ast_hash": "12758eb023944482ffb1a3ece1821ee8",
+    "semantic_hash": "12758eb023944482ffb1a3ece1821ee8"
+  },
+  "preview.py": {
+    "mtime": 1788083950.85,
+    "ast_hash": "cd9e27a801a9ad045f741f3e576b8d58",
+    "semantic_hash": "cd9e27a801a9ad045f741f3e576b8d58"
+  },
+  "report_handler.py": {
+    "mtime": 1788083950.85,
+    "ast_hash": "09a55153595ef3e5e74f26a505415bdb",
+    "semantic_hash": "09a55153595ef3e5e74f26a505415bdb"
+  },
+  "scripts/install-linux-desktop.sh": {
+    "mtime": 1788092509.73,
+    "ast_hash": "b0d4281ca325e38af65d1a5f89bb68ed",
+    "semantic_hash": "b0d4281ca325e38af65d1a5f89bb68ed"
+  },
+  "scripts/install-windows-shortcut.ps1": {
+    "mtime": 1788092509.81,
+    "ast_hash": "0b50ae508f3e07bde994ef5773c963b1",
+    "semantic_hash": "0b50ae508f3e07bde994ef5773c963b1"
+  },
+  "settings.py": {
+    "mtime": 1788083950.85,
+    "ast_hash": "02a999bf1119f178fa0ac5f82fb23cbb",
+    "semantic_hash": "02a999bf1119f178fa0ac5f82fb23cbb"
+  },
+  "tests/test_logic.py": {
+    "mtime": 1788084651.46,
+    "ast_hash": "d9e92f94a3c3838650597fd2e2f78c84",
+    "semantic_hash": "d9e92f94a3c3838650597fd2e2f78c84"
+  }
+}

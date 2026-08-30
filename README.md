@@ -80,6 +80,27 @@ GitHub Actions runs on pull requests and pushes to `main` or `master`. The CI ch
 
 Each job installs `requirements.txt`, compiles the Python modules, and runs `pytest`. Keep shared validation in CI so contributors on Fedora and Windows catch the same issues before merging.
 
+## Repository Graph for AI Agents
+
+This repo includes a Graphify code graph under `graphify-out/`. It helps AI agents and developers navigate relationships between modules, classes, and functions without reading every file first.
+
+Useful commands:
+
+```bash
+graphify god-nodes --top 8
+graphify explain "CalculatorApp"
+graphify query "How does receipt export work?"
+graphify path "CalculatorApp" "calculate_cost()"
+```
+
+After code changes, refresh the graph:
+
+```bash
+graphify update .
+```
+
+The `.graphifyignore` file keeps generated folders, build outputs, caches, and local runtime data out of the graph.
+
 ## Packaging
 
 The code includes PyInstaller-compatible resource path handling. A typical one-file desktop build is:

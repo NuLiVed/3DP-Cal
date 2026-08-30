@@ -1,0 +1,16 @@
+.git/
+.github/
+.pytest_cache/
+.vscode/
+__pycache__/
+*.pyc
+
+build/
+dist/
+*.spec
+
+Data/
+Receipts/
+Reports/
+
+graphify-out/

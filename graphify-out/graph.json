@@ -1,0 +1,2246 @@
+{
+  "nodes": [
+    {
+      "id": "config",
+      "label": "config.py",
+      "file_type": "code",
+      "source_file": "config.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "database",
+      "label": "database.py",
+      "file_type": "code",
+      "source_file": "database.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "database_get_connection",
+      "label": "get_connection()",
+      "file_type": "code",
+      "source_file": "database.py",
+      "source_location": "L5",
+      "_origin": "ast"
+    },
+    {
+      "id": "database_initialize_database",
+      "label": "initialize_database()",
+      "file_type": "code",
+      "source_file": "database.py",
+      "source_location": "L9",
+      "_origin": "ast"
+    },
+    {
+      "id": "database_get_all_materials",
+      "label": "get_all_materials()",
+      "file_type": "code",
+      "source_file": "database.py",
+      "source_location": "L53",
+      "_origin": "ast"
+    },
+    {
+      "id": "database_add_material",
+      "label": "add_material()",
+      "file_type": "code",
+      "source_file": "database.py",
+      "source_location": "L61",
+      "_origin": "ast"
+    },
+    {
+      "id": "database_delete_material",
+      "label": "delete_material()",
+      "file_type": "code",
+      "source_file": "database.py",
+      "source_location": "L70",
+      "_origin": "ast"
+    },
+    {
+      "id": "database_get_settings",
+      "label": "get_settings()",
+      "file_type": "code",
+      "source_file": "database.py",
+      "source_location": "L77",
+      "_origin": "ast"
+    },
+    {
+      "id": "database_update_settings",
+      "label": "update_settings()",
+      "file_type": "code",
+      "source_file": "database.py",
+      "source_location": "L83",
+      "_origin": "ast"
+    },
+    {
+      "id": "database_get_next_order_id",
+      "label": "get_next_order_id()",
+      "file_type": "code",
+      "source_file": "database.py",
+      "source_location": "L95",
+      "_origin": "ast"
+    },
+    {
+      "id": "database_save_receipt",
+      "label": "save_receipt()",
+      "file_type": "code",
+      "source_file": "database.py",
+      "source_location": "L102",
+      "_origin": "ast"
+    },
+    {
+      "id": "database_get_last_receipt",
+      "label": "get_last_receipt()",
+      "file_type": "code",
+      "source_file": "database.py",
+      "source_location": "L113",
+      "_origin": "ast"
+    },
+    {
+      "id": "database_get_monthly_records",
+      "label": "get_monthly_records()",
+      "file_type": "code",
+      "source_file": "database.py",
+      "source_location": "L119",
+      "_origin": "ast"
+    },
+    {
+      "id": "database_rationale_6",
+      "label": "Centrally managed connection using the absolute path",
+      "file_type": "rationale",
+      "source_file": "database.py",
+      "source_location": "L6",
+      "_origin": "ast"
+    },
+    {
+      "id": "database_rationale_54",
+      "label": "Returns materials sorted alphabetically by name.",
+      "file_type": "rationale",
+      "source_file": "database.py",
+      "source_location": "L54",
+      "_origin": "ast"
+    },
+    {
+      "id": "database_rationale_71",
+      "label": "Removes a material from the database by its unique name.",
+      "file_type": "rationale",
+      "source_file": "database.py",
+      "source_location": "L71",
+      "_origin": "ast"
+    },
+    {
+      "id": "export",
+      "label": "export.py",
+      "file_type": "code",
+      "source_file": "export.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "export_generate_pdf",
+      "label": "generate_pdf()",
+      "file_type": "code",
+      "source_file": "export.py",
+      "source_location": "L9",
+      "_origin": "ast"
+    },
+    {
+      "id": "export_generate_png",
+      "label": "generate_png()",
+      "file_type": "code",
+      "source_file": "export.py",
+      "source_location": "L42",
+      "_origin": "ast"
+    },
+    {
+      "id": "export_export_to_excel",
+      "label": "export_to_excel()",
+      "file_type": "code",
+      "source_file": "export.py",
+      "source_location": "L80",
+      "_origin": "ast"
+    },
+    {
+      "id": "export_rationale_10",
+      "label": "Generates a PDF receipt using the absolute path.",
+      "file_type": "rationale",
+      "source_file": "export.py",
+      "source_location": "L10",
+      "_origin": "ast"
+    },
+    {
+      "id": "export_rationale_43",
+      "label": "Generates a PNG receipt saved in the Receipts folder.",
+      "file_type": "rationale",
+      "source_file": "export.py",
+      "source_location": "L43",
+      "_origin": "ast"
+    },
+    {
+      "id": "export_rationale_81",
+      "label": "Saves monthly report into the absolute Reports directory.",
+      "file_type": "rationale",
+      "source_file": "export.py",
+      "source_location": "L81",
+      "_origin": "ast"
+    },
+    {
+      "id": "logic",
+      "label": "logic.py",
+      "file_type": "code",
+      "source_file": "logic.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "logic_calculate_cost",
+      "label": "calculate_cost()",
+      "file_type": "code",
+      "source_file": "logic.py",
+      "source_location": "L3",
+      "_origin": "ast"
+    },
+    {
+      "id": "logic_rationale_4",
+      "label": "Calculate the total cost of a 3D print job based on weight, hours, material data",
+      "file_type": "rationale",
+      "source_file": "logic.py",
+      "source_location": "L4",
+      "_origin": "ast"
+    },
+    {
+      "id": "main",
+      "label": "main.py",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_resource_path",
+      "label": "resource_path()",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L37",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_calculatorapp",
+      "label": "CalculatorApp",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L46",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_calculatorapp_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L47",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_calculatorapp_toggle_theme",
+      "label": ".toggle_theme()",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L82",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_calculatorapp_get_theme_colors",
+      "label": ".get_theme_colors()",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L87",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_calculatorapp_apply_theme",
+      "label": ".apply_theme()",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L91",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_calculatorapp_generate_report",
+      "label": ".generate_report()",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L152",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_calculatorapp_create_toolbar",
+      "label": ".create_toolbar()",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L155",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_calculatorapp_create_main",
+      "label": ".create_main()",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L219",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_calculatorapp_refresh_material_dropdown",
+      "label": ".refresh_material_dropdown()",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L280",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_calculatorapp_calculate_cost",
+      "label": ".calculate_cost()",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L301",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_calculatorapp_load_last_job",
+      "label": ".load_last_job()",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L333",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_calculatorapp_open_settings",
+      "label": ".open_settings()",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L346",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_calculatorapp_open_materials_mgr",
+      "label": ".open_materials_mgr()",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L350",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_rationale_38",
+      "label": "Get absolute path to resource, works for dev and for PyInstaller",
+      "file_type": "rationale",
+      "source_file": "main.py",
+      "source_location": "L38",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_rationale_83",
+      "label": "Switches the theme and triggers a UI repaint",
+      "file_type": "rationale",
+      "source_file": "main.py",
+      "source_location": "L83",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_rationale_88",
+      "label": "Helper for external files to fetch current palette",
+      "file_type": "rationale",
+      "source_file": "main.py",
+      "source_location": "L88",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_rationale_156",
+      "label": "Creates top icon toolbar for quick access to settings and receipt history",
+      "file_type": "rationale",
+      "source_file": "main.py",
+      "source_location": "L156",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_rationale_220",
+      "label": "Creates the Main UI for Material Selection, Weight and Hours Input, and Calculat",
+      "file_type": "rationale",
+      "source_file": "main.py",
+      "source_location": "L220",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_rationale_281",
+      "label": "Re-pulls materials from DB and updates the combobox without losing selection.",
+      "file_type": "rationale",
+      "source_file": "main.py",
+      "source_location": "L281",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_rationale_302",
+      "label": "Calculates the total cost of a 3D print job based on user input and database val",
+      "file_type": "rationale",
+      "source_file": "main.py",
+      "source_location": "L302",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_rationale_347",
+      "label": "Creates a Settings Window to Update Meralco Rate and Setup Fee",
+      "file_type": "rationale",
+      "source_file": "main.py",
+      "source_location": "L347",
+      "_origin": "ast"
+    },
+    {
+      "id": "main_rationale_351",
+      "label": "Creates a Material Manager Window to Add or Remove Materials from the Database",
+      "file_type": "rationale",
+      "source_file": "main.py",
+      "source_location": "L351",
+      "_origin": "ast"
+    },
+    {
+      "id": "material_manager",
+      "label": "material_manager.py",
+      "file_type": "code",
+      "source_file": "material_manager.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "material_manager_materialmanagerwindow",
+      "label": "MaterialManagerWindow",
+      "file_type": "code",
+      "source_file": "material_manager.py",
+      "source_location": "L5",
+      "_origin": "ast"
+    },
+    {
+      "id": "material_manager_materialmanagerwindow_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "material_manager.py",
+      "source_location": "L6",
+      "_origin": "ast"
+    },
+    {
+      "id": "material_manager_materialmanagerwindow_add_themed_label",
+      "label": ".add_themed_label()",
+      "file_type": "code",
+      "source_file": "material_manager.py",
+      "source_location": "L23",
+      "_origin": "ast"
+    },
+    {
+      "id": "material_manager_materialmanagerwindow_create_widgets",
+      "label": ".create_widgets()",
+      "file_type": "code",
+      "source_file": "material_manager.py",
+      "source_location": "L31",
+      "_origin": "ast"
+    },
+    {
+      "id": "material_manager_materialmanagerwindow_refresh_delete_list",
+      "label": ".refresh_delete_list()",
+      "file_type": "code",
+      "source_file": "material_manager.py",
+      "source_location": "L76",
+      "_origin": "ast"
+    },
+    {
+      "id": "material_manager_materialmanagerwindow_save_material",
+      "label": ".save_material()",
+      "file_type": "code",
+      "source_file": "material_manager.py",
+      "source_location": "L85",
+      "_origin": "ast"
+    },
+    {
+      "id": "material_manager_materialmanagerwindow_confirm_delete",
+      "label": ".confirm_delete()",
+      "file_type": "code",
+      "source_file": "material_manager.py",
+      "source_location": "L102",
+      "_origin": "ast"
+    },
+    {
+      "id": "material_manager_rationale_24",
+      "label": "Helper to create and register labels in one go (Matches your Settings style)",
+      "file_type": "rationale",
+      "source_file": "material_manager.py",
+      "source_location": "L24",
+      "_origin": "ast"
+    },
+    {
+      "id": "preview",
+      "label": "preview.py",
+      "file_type": "code",
+      "source_file": "preview.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "preview_previewwindow",
+      "label": "PreviewWindow",
+      "file_type": "code",
+      "source_file": "preview.py",
+      "source_location": "L7",
+      "_origin": "ast"
+    },
+    {
+      "id": "preview_previewwindow_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "preview.py",
+      "source_location": "L8",
+      "_origin": "ast"
+    },
+    {
+      "id": "preview_previewwindow_create_widgets",
+      "label": ".create_widgets()",
+      "file_type": "code",
+      "source_file": "preview.py",
+      "source_location": "L29",
+      "_origin": "ast"
+    },
+    {
+      "id": "preview_previewwindow_handle_export",
+      "label": ".handle_export()",
+      "file_type": "code",
+      "source_file": "preview.py",
+      "source_location": "L68",
+      "_origin": "ast"
+    },
+    {
+      "id": "report_handler",
+      "label": "report_handler.py",
+      "file_type": "code",
+      "source_file": "report_handler.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "report_handler_generate_monthly_report",
+      "label": "generate_monthly_report()",
+      "file_type": "code",
+      "source_file": "report_handler.py",
+      "source_location": "L6",
+      "_origin": "ast"
+    },
+    {
+      "id": "report_handler_rationale_7",
+      "label": "Logic to fetch and export monthly data",
+      "file_type": "rationale",
+      "source_file": "report_handler.py",
+      "source_location": "L7",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_install_linux_desktop",
+      "label": "install-linux-desktop.sh",
+      "file_type": "code",
+      "source_file": "scripts/install-linux-desktop.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_install_linux_desktop_sh__entry",
+      "label": "install-linux-desktop.sh script",
+      "file_type": "code",
+      "source_file": "scripts/install-linux-desktop.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_install_windows_shortcut",
+      "label": "install-windows-shortcut.ps1",
+      "file_type": "code",
+      "source_file": "scripts/install-windows-shortcut.ps1",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "settings",
+      "label": "settings.py",
+      "file_type": "code",
+      "source_file": "settings.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "settings_settingswindow",
+      "label": "SettingsWindow",
+      "file_type": "code",
+      "source_file": "settings.py",
+      "source_location": "L8",
+      "_origin": "ast"
+    },
+    {
+      "id": "settings_settingswindow_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "settings.py",
+      "source_location": "L9",
+      "_origin": "ast"
+    },
+    {
+      "id": "settings_settingswindow_add_themed_label",
+      "label": ".add_themed_label()",
+      "file_type": "code",
+      "source_file": "settings.py",
+      "source_location": "L26",
+      "_origin": "ast"
+    },
+    {
+      "id": "settings_settingswindow_create_widgets",
+      "label": ".create_widgets()",
+      "file_type": "code",
+      "source_file": "settings.py",
+      "source_location": "L34",
+      "_origin": "ast"
+    },
+    {
+      "id": "settings_settingswindow_save_settings",
+      "label": ".save_settings()",
+      "file_type": "code",
+      "source_file": "settings.py",
+      "source_location": "L62",
+      "_origin": "ast"
+    },
+    {
+      "id": "settings_settingswindow_handle_monthly_report",
+      "label": ".handle_monthly_report()",
+      "file_type": "code",
+      "source_file": "settings.py",
+      "source_location": "L71",
+      "_origin": "ast"
+    },
+    {
+      "id": "settings_rationale_27",
+      "label": "Helper to create and register labels in one go",
+      "file_type": "rationale",
+      "source_file": "settings.py",
+      "source_location": "L27",
+      "_origin": "ast"
+    },
+    {
+      "id": "settings_rationale_72",
+      "label": "Helper to bridge the UI, Database, and Export modules",
+      "file_type": "rationale",
+      "source_file": "settings.py",
+      "source_location": "L72",
+      "_origin": "ast"
+    },
+    {
+      "id": "tests_test_logic",
+      "label": "test_logic.py",
+      "file_type": "code",
+      "source_file": "tests/test_logic.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "tests_test_logic_test_calculate_cost_short_print_under_100g",
+      "label": "test_calculate_cost_short_print_under_100g()",
+      "file_type": "code",
+      "source_file": "tests/test_logic.py",
+      "source_location": "L4",
+      "_origin": "ast"
+    },
+    {
+      "id": "tests_test_logic_test_calculate_cost_long_print_uses_weight_multiplier_and_rate_tier",
+      "label": "test_calculate_cost_long_print_uses_weight_multiplier_and_rate_tier()",
+      "file_type": "code",
+      "source_file": "tests/test_logic.py",
+      "source_location": "L14",
+      "_origin": "ast"
+    }
+  ],
+  "edges": [
+    {
+      "source": "config",
+      "target": "os",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "config.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "config",
+      "target": "sys",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "config.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database",
+      "target": "sqlite3",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database",
+      "target": "datetime",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database",
+      "target": "config",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database",
+      "target": "database_get_connection",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database",
+      "target": "database_initialize_database",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database",
+      "target": "database_get_all_materials",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L53",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database",
+      "target": "database_add_material",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L61",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database",
+      "target": "database_delete_material",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L70",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database",
+      "target": "database_get_settings",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L77",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database",
+      "target": "database_update_settings",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L83",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database",
+      "target": "database_get_next_order_id",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L95",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database",
+      "target": "database_save_receipt",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L102",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database",
+      "target": "database_get_last_receipt",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L113",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database",
+      "target": "database_get_monthly_records",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L119",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database_initialize_database",
+      "target": "database_get_connection",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database_get_all_materials",
+      "target": "database_get_connection",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database_add_material",
+      "target": "database_get_connection",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L62",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database_delete_material",
+      "target": "database_get_connection",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L72",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database_get_settings",
+      "target": "database_get_connection",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L78",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database_update_settings",
+      "target": "database_get_connection",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L84",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database_get_next_order_id",
+      "target": "database_get_connection",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L96",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database_save_receipt",
+      "target": "database_get_connection",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L103",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database_get_last_receipt",
+      "target": "database_get_connection",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L114",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database_get_monthly_records",
+      "target": "database_get_connection",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L120",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database_rationale_6",
+      "target": "database_get_connection",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database_rationale_54",
+      "target": "database_get_all_materials",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L54",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "database_rationale_71",
+      "target": "database_delete_material",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "database.py",
+      "source_location": "L71",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "export",
+      "target": "reportlab_lib_pagesizes",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "export.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "export",
+      "target": "reportlab_pdfgen",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "export.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "export",
+      "target": "pil",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "export.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "export",
+      "target": "csv",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "export.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "export",
+      "target": "os",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "export.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "export",
+      "target": "config",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "export.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "export",
+      "target": "export_generate_pdf",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "export.py",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "export",
+      "target": "export_generate_png",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "export.py",
+      "source_location": "L42",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "export",
+      "target": "export_export_to_excel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "export.py",
+      "source_location": "L80",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "export_rationale_10",
+      "target": "export_generate_pdf",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "export.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "export_rationale_43",
+      "target": "export_generate_png",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "export.py",
+      "source_location": "L43",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "export_rationale_81",
+      "target": "export_export_to_excel",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "export.py",
+      "source_location": "L81",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "logic",
+      "target": "math",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "logic.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "logic",
+      "target": "logic_calculate_cost",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "logic.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "logic_rationale_4",
+      "target": "logic_calculate_cost",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "logic.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main",
+      "target": "tkinter",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main",
+      "target": "sys",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main",
+      "target": "os",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main",
+      "target": "tkinter",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main",
+      "target": "pil",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main",
+      "target": "database",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main",
+      "target": "logic",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main",
+      "target": "report_handler",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main",
+      "target": "material_manager",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main",
+      "target": "config",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main",
+      "target": "settings",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main",
+      "target": "preview",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main",
+      "target": "main_resource_path",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main",
+      "target": "main_calculatorapp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L46",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp",
+      "target": "main_calculatorapp_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L47",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp",
+      "target": "main_calculatorapp_toggle_theme",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L82",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp",
+      "target": "main_calculatorapp_get_theme_colors",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L87",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp",
+      "target": "main_calculatorapp_apply_theme",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L91",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp",
+      "target": "main_calculatorapp_generate_report",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L152",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp",
+      "target": "main_calculatorapp_create_toolbar",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L155",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp",
+      "target": "main_calculatorapp_create_main",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L219",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp",
+      "target": "main_calculatorapp_refresh_material_dropdown",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L280",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp",
+      "target": "main_calculatorapp_calculate_cost",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L301",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp",
+      "target": "main_calculatorapp_load_last_job",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L333",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp",
+      "target": "main_calculatorapp_open_settings",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L346",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp",
+      "target": "main_calculatorapp_open_materials_mgr",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L350",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp_init",
+      "target": "main_calculatorapp_create_toolbar",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L59",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp_init",
+      "target": "main_calculatorapp_create_main",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L60",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp_init",
+      "target": "main_calculatorapp_apply_theme",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L80",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp_toggle_theme",
+      "target": "main_calculatorapp_apply_theme",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L85",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp_create_toolbar",
+      "target": "main_resource_path",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L164",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_rationale_38",
+      "target": "main_resource_path",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L38",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_rationale_83",
+      "target": "main_calculatorapp_toggle_theme",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L83",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_rationale_88",
+      "target": "main_calculatorapp_get_theme_colors",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L88",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_rationale_156",
+      "target": "main_calculatorapp_create_toolbar",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L156",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_rationale_220",
+      "target": "main_calculatorapp_create_main",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L220",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_rationale_281",
+      "target": "main_calculatorapp_refresh_material_dropdown",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L281",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_rationale_302",
+      "target": "main_calculatorapp_calculate_cost",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L302",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_rationale_347",
+      "target": "main_calculatorapp_open_settings",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L347",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_rationale_351",
+      "target": "main_calculatorapp_open_materials_mgr",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L351",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "material_manager",
+      "target": "tkinter",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "material_manager.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "material_manager",
+      "target": "tkinter",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "material_manager.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "material_manager",
+      "target": "database",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "material_manager.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "material_manager",
+      "target": "material_manager_materialmanagerwindow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "material_manager.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "material_manager_materialmanagerwindow",
+      "target": "material_manager_materialmanagerwindow_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "material_manager.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "material_manager_materialmanagerwindow",
+      "target": "material_manager_materialmanagerwindow_add_themed_label",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "material_manager.py",
+      "source_location": "L23",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "material_manager_materialmanagerwindow",
+      "target": "material_manager_materialmanagerwindow_create_widgets",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "material_manager.py",
+      "source_location": "L31",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "material_manager_materialmanagerwindow",
+      "target": "material_manager_materialmanagerwindow_refresh_delete_list",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "material_manager.py",
+      "source_location": "L76",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "material_manager_materialmanagerwindow",
+      "target": "material_manager_materialmanagerwindow_save_material",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "material_manager.py",
+      "source_location": "L85",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "material_manager_materialmanagerwindow",
+      "target": "material_manager_materialmanagerwindow_confirm_delete",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "material_manager.py",
+      "source_location": "L102",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "material_manager_materialmanagerwindow_init",
+      "target": "material_manager_materialmanagerwindow_create_widgets",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "material_manager.py",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "material_manager_materialmanagerwindow_create_widgets",
+      "target": "material_manager_materialmanagerwindow_add_themed_label",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "material_manager.py",
+      "source_location": "L33",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "material_manager_materialmanagerwindow_create_widgets",
+      "target": "material_manager_materialmanagerwindow_refresh_delete_list",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "material_manager.py",
+      "source_location": "L74",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "material_manager_materialmanagerwindow_save_material",
+      "target": "material_manager_materialmanagerwindow_refresh_delete_list",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "material_manager.py",
+      "source_location": "L93",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "material_manager_materialmanagerwindow_confirm_delete",
+      "target": "material_manager_materialmanagerwindow_refresh_delete_list",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "material_manager.py",
+      "source_location": "L106",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "material_manager_rationale_24",
+      "target": "material_manager_materialmanagerwindow_add_themed_label",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "material_manager.py",
+      "source_location": "L24",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "preview",
+      "target": "tkinter",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "preview.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "preview",
+      "target": "tkinter",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "preview.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "preview",
+      "target": "datetime",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "preview.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "preview",
+      "target": "database",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "preview.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "preview",
+      "target": "export",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "preview.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "preview",
+      "target": "preview_previewwindow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "preview.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "preview_previewwindow",
+      "target": "preview_previewwindow_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "preview.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "preview_previewwindow",
+      "target": "preview_previewwindow_create_widgets",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "preview.py",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "preview_previewwindow",
+      "target": "preview_previewwindow_handle_export",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "preview.py",
+      "source_location": "L68",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "preview_previewwindow_init",
+      "target": "preview_previewwindow_create_widgets",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "preview.py",
+      "source_location": "L24",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "preview_previewwindow_create_widgets",
+      "target": "preview_previewwindow_handle_export",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "preview.py",
+      "source_location": "L53",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "report_handler",
+      "target": "tkinter",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "report_handler.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "report_handler",
+      "target": "datetime",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "report_handler.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "report_handler",
+      "target": "database",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "report_handler.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "report_handler",
+      "target": "export",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "report_handler.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "report_handler",
+      "target": "report_handler_generate_monthly_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "report_handler.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "report_handler_rationale_7",
+      "target": "report_handler_generate_monthly_report",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "report_handler.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "scripts_install_linux_desktop",
+      "target": "scripts_install_linux_desktop_sh__entry",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/install-linux-desktop.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "settings",
+      "target": "tkinter",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "settings.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "settings",
+      "target": "tkinter",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "settings.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "settings",
+      "target": "database",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "settings.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "settings",
+      "target": "export",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "settings.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "settings",
+      "target": "datetime",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "settings.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "settings",
+      "target": "settings_settingswindow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "settings.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "settings_settingswindow",
+      "target": "settings_settingswindow_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "settings.py",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "settings_settingswindow",
+      "target": "settings_settingswindow_add_themed_label",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "settings.py",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "settings_settingswindow",
+      "target": "settings_settingswindow_create_widgets",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "settings.py",
+      "source_location": "L34",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "settings_settingswindow",
+      "target": "settings_settingswindow_save_settings",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "settings.py",
+      "source_location": "L62",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "settings_settingswindow",
+      "target": "settings_settingswindow_handle_monthly_report",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "settings.py",
+      "source_location": "L71",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "settings_settingswindow_init",
+      "target": "settings_settingswindow_create_widgets",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "settings.py",
+      "source_location": "L23",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "settings_settingswindow_create_widgets",
+      "target": "settings_settingswindow_add_themed_label",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "settings.py",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "settings_rationale_27",
+      "target": "settings_settingswindow_add_themed_label",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "settings.py",
+      "source_location": "L27",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "settings_rationale_72",
+      "target": "settings_settingswindow_handle_monthly_report",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "settings.py",
+      "source_location": "L72",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "tests_test_logic",
+      "target": "logic",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_logic.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "tests_test_logic",
+      "target": "tests_test_logic_test_calculate_cost_short_print_under_100g",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_logic.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "tests_test_logic",
+      "target": "tests_test_logic_test_calculate_cost_long_print_uses_weight_multiplier_and_rate_tier",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_logic.py",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main",
+      "target": "material_manager_materialmanagerwindow",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main",
+      "target": "settings_settingswindow",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main",
+      "target": "preview_previewwindow",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp",
+      "target": "material_manager_materialmanagerwindow",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "main.py",
+      "source_location": "L12",
+      "weight": 0.8,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp",
+      "target": "settings_settingswindow",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "main.py",
+      "source_location": "L14",
+      "weight": 0.8,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp",
+      "target": "preview_previewwindow",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "main.py",
+      "source_location": "L15",
+      "weight": 0.8,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp_calculate_cost",
+      "target": "preview_previewwindow",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "main.py",
+      "source_location": "L325",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp_open_settings",
+      "target": "settings_settingswindow",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "main.py",
+      "source_location": "L348",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "main_calculatorapp_open_materials_mgr",
+      "target": "material_manager_materialmanagerwindow",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "main.py",
+      "source_location": "L352",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "report_handler_generate_monthly_report",
+      "target": "database_get_monthly_records",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "report_handler.py",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "report_handler_generate_monthly_report",
+      "target": "export_export_to_excel",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "report_handler.py",
+      "source_location": "L19",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "tests_test_logic_test_calculate_cost_short_print_under_100g",
+      "target": "logic_calculate_cost",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_logic.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "tests_test_logic_test_calculate_cost_long_print_uses_weight_multiplier_and_rate_tier",
+      "target": "logic_calculate_cost",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_logic.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_origin": "ast"
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
