@@ -94,6 +94,72 @@ On Windows, use a semicolon in `--add-data`:
 pyinstaller --onefile --windowed --add-data "Assets;assets" main.py
 ```
 
+## Building a Linux Executable and Launcher Shortcut
+
+From a Linux system such as Fedora, install the app dependencies and PyInstaller:
+
+```bash
+python -m pip install -r requirements.txt pyinstaller
+```
+
+Build the executable from the repository root:
+
+```bash
+pyinstaller --onefile --windowed --name 3dp-cost-calculator --add-data "Assets:assets" main.py
+```
+
+The executable will be created at:
+
+```text
+dist/3dp-cost-calculator
+```
+
+Run it with:
+
+```bash
+./dist/3dp-cost-calculator
+```
+
+Install it into your user app launcher:
+
+```bash
+bash scripts/install-linux-desktop.sh
+```
+
+This copies the executable to `~/.local/share/3dp-cost-calculator/`, installs the icon, and creates a `.desktop` entry under `~/.local/share/applications/`. After that, search for `3DP Cost Calculator` from the desktop application launcher.
+
+When launched, the installed executable creates `Data/`, `Receipts/`, and `Reports/` beside itself. Build artifacts such as `build/`, `dist/`, and `.spec` files are ignored by Git.
+
+## Building a Windows Executable and Shortcuts
+
+From PowerShell on Windows, install dependencies and PyInstaller:
+
+```powershell
+python -m pip install -r requirements.txt pyinstaller
+```
+
+Build the executable:
+
+```powershell
+pyinstaller --onefile --windowed --name 3dp-cost-calculator --add-data "Assets;assets" main.py
+```
+
+The executable will be created at:
+
+```text
+dist\3dp-cost-calculator.exe
+```
+
+Create Start Menu and Desktop shortcuts:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\install-windows-shortcut.ps1
+```
+
+After that, search for `3DP Cost Calculator` in the Windows Start Menu or launch it from the Desktop shortcut.
+
+The script copies the executable to `%LOCALAPPDATA%\3DP Cost Calculator\` before creating shortcuts, so the shortcut does not depend on the repository `dist\` folder staying in place.
+
 ## Notes
 
 Default materials and settings are inserted automatically when the database is empty. Keep new filesystem paths in `config.py` so script and packaged-executable behavior stays consistent.
