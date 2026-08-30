@@ -3,14 +3,15 @@ from tkinter import messagebox
 from datetime import datetime
 import database
 import export
+import logic
 
 class PreviewWindow:
-    def __init__(self, main_app, mat, w, h, rate_label, total_cost, order_id):
+    def __init__(self, main_app, mat, w, h, m, rate_label, total_cost, order_id):
         self.main_app = main_app
         self.colors = main_app.get_theme_colors()
-        
+
         # Data storage for export logic
-        self.params = (mat, w, h, rate_label, total_cost, order_id)
+        self.params = (mat, w, h, m, rate_label, total_cost, order_id)
         
         # Window Setup
         self.win = tk.Toplevel(main_app.root)
@@ -27,11 +28,11 @@ class PreviewWindow:
         self.main_app.apply_theme()
 
     def create_widgets(self):
-        mat, w, h, rate_label, total_cost, order_id = self.params
-        
+        mat, w, h, m, rate_label, total_cost, order_id = self.params
+
         # --- RECEIPT FORMATTING ---
         header = f"3d Print Job Cost Breakdown \n{'-'*28} \nDate: {datetime.now().strftime('%Y-%m-%d')}"
-        body = f"\nMaterial: {mat} \nWeight: {w:.2f}g \nPrint Time: {h:.2f} hrs \n\nRate: {rate_label}\n"
+        body = f"\nMaterial: {mat} \nWeight: {w:.2f}g \nPrint Time: {logic.format_duration(h, m)} \n\nRate: {rate_label}\n"
         footer = f"\n{'-'*28}\n TOTAL: Php {total_cost:.2f} \n{'-'*28}\n Thank you!"
         
         # Main Receipt Label
@@ -66,22 +67,27 @@ class PreviewWindow:
         self.main_app.theme_elements.append(self.img_btn)
 
     def handle_export(self, export_type):
-        mat, w, h, rate_label, total_cost, order_id = self.params
+        mat, w, h, m, rate_label, total_cost, order_id = self.params
         f_base = f"Receipt_Order_{order_id}_{mat}"
-        
+
         try:
             ext = ".pdf" if export_type == "PDF" else ".png"
             filename_full = f_base + ext
-            
+
             if export_type == "PDF":
-                export.generate_pdf(f_base, mat, w, h, rate_label, total_cost)
-            else: 
-                export.generate_png(f_base, mat, w, h, rate_label, total_cost)
-                
-            database.save_receipt(f"Tier: {rate_label}", filename_full, mat, w, h, total_cost)
+                export.generate_pdf(f_base, mat, w, h, m, rate_label, total_cost)
+            else:
+                export.generate_png(f_base, mat, w, h, m, rate_label, total_cost)
+
+            # Print time is stored as decimal hours so reports and reprints stay consistent
+            database.save_receipt(f"Tier: {rate_label}", filename_full, mat, w, logic.to_decimal_hours(h, m), total_cost)
             
             messagebox.showinfo("Export Successful", f"Order #{order_id} exported as {export_type}")
-            self.win.destroy() 
-            
+            self.win.destroy()
+
+        except PermissionError:
+            messagebox.showerror("Export Failed", "Could not save the file — it may be open in another program. Close it and try again.")
+        except RuntimeError as e:
+            messagebox.showerror("Database Error", str(e))
         except Exception as e:
             messagebox.showerror("Export Failed", f"Failed to export {export_type}: {e}")

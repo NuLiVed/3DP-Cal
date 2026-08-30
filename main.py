@@ -54,8 +54,12 @@ class CalculatorApp:
         self.theme_elements = []
         
         # Initialize Database on startup
-        database.initialize_database()
-        
+        try:
+            database.initialize_database()
+        except RuntimeError as e:
+            messagebox.showerror("Fatal Error", f"Could not start application:\n{e}")
+            sys.exit(1)
+
         self.create_toolbar()
         self.create_main()
         
@@ -103,6 +107,9 @@ class CalculatorApp:
         self.root.configure(bg=colors["bg"])
         self.toolbar.configure(bg=colors["secondary"])
         self.content_frame.configure(bg=colors["card"])
+        # Time input row sits on the card, so it follows the card color
+        if hasattr(self, 'time_frame'):
+            self.time_frame.configure(bg=colors["card"])
 
         # Update Theme Toggle Icon specifically
         if hasattr(self, 'theme_btn'):
@@ -240,9 +247,13 @@ class CalculatorApp:
         self.theme_elements.append(mat_lbl)
 
         # The Combobox Fix
-        self.materials = database.get_all_materials()
+        try:
+            self.materials = database.get_all_materials()
+        except RuntimeError as e:
+            messagebox.showerror("Database Error", str(e))
+            self.materials = []
         self.mat_names = [m[0] for m in self.materials]
-        
+
         self.mat_combo = ttk.Combobox(self.content_frame, values=self.mat_names, state="readonly")
         self.mat_combo.pack(fill="x", pady=(5, 20))
         # Important: Select the first item so it's not 'empty'
@@ -254,11 +265,29 @@ class CalculatorApp:
         self.weight_entry.pack(fill="x", pady=(5, 20))
         self.theme_elements.append(self.weight_entry) # Add to registry!
         
-        add_lbl("Enter Print Time (hours):")
-        self.hours_entry = tk.Entry(self.content_frame, relief="flat", font=("Arial", 11))
-        self.hours_entry.pack(fill="x", pady=(5, 20))
+        add_lbl("Enter Print Time (hours & minutes):")
+        # Side-by-side hours and minutes inputs
+        self.time_frame = tk.Frame(self.content_frame, bg=colors["card"])
+        self.time_frame.pack(fill="x", pady=(5, 20))
+
+        self.hours_entry = tk.Entry(self.time_frame, relief="flat", font=("Arial", 11), width=6)
+        self.hours_entry.pack(side="left", fill="x", expand=True)
+        self.hours_entry.insert(0, "0")
         self.theme_elements.append(self.hours_entry) # Add to registry!
-        
+
+        hrs_lbl = tk.Label(self.time_frame, text="hrs", bg=colors["card"], fg=colors["text"])
+        hrs_lbl.pack(side="left", padx=(8, 20))
+        self.theme_elements.append(hrs_lbl)
+
+        self.mins_entry = tk.Entry(self.time_frame, relief="flat", font=("Arial", 11), width=6)
+        self.mins_entry.pack(side="left", fill="x", expand=True)
+        self.mins_entry.insert(0, "0")
+        self.theme_elements.append(self.mins_entry) # Add to registry!
+
+        mins_lbl = tk.Label(self.time_frame, text="mins", bg=colors["card"], fg=colors["text"])
+        mins_lbl.pack(side="left", padx=(8, 0))
+        self.theme_elements.append(mins_lbl)
+
         # Calculate Button - Always keeps its text white but changes BG color
         self.calc_btn = tk.Button(
             self.content_frame, text=" Calculate Cost ", command=self.calculate_cost,
@@ -281,11 +310,15 @@ class CalculatorApp:
         """Re-pulls materials from DB and updates the combobox without losing selection."""
         # 1. Capture selection
         current_selection = self.mat_combo.get()
-        
+
         # 2. Get data (Assuming database is imported at top of file)
-        self.materials = database.get_all_materials()
+        try:
+            self.materials = database.get_all_materials()
+        except RuntimeError as e:
+            messagebox.showerror("Database Error", str(e))
+            return
         self.mat_names = [m[0] for m in self.materials]
-        
+
         # 3. Update UI
         self.mat_combo['values'] = self.mat_names
         
@@ -303,53 +336,77 @@ class CalculatorApp:
         try:
             name = self.mat_combo.get()
             w = float(self.weight_entry.get())
-            h = float(self.hours_entry.get())
-            
+            # Blank time fields count as zero so users can enter minutes only
+            h = int(self.hours_entry.get().strip() or 0)
+            m = int(self.mins_entry.get().strip() or 0)
+
             if not name:
                 messagebox.showwarning("Incomplete", "Please select a material.")
                 return
-            if w <= 0  or h <= 0:
-                messagebox.showwarning("Invalid Input", "Please Enter Valid Weight and Hours.")
+            if h < 0 or m < 0 or m > 59:
+                messagebox.showwarning("Invalid Input", "Minutes must be between 0 and 59.")
                 return
-            
+            if w <= 0  or (h == 0 and m == 0):
+                messagebox.showwarning("Invalid Input", "Please Enter Valid Weight and Print Time.")
+                return
+
             # Retrieve Material Data and Global Settings from Database
             mat_data = next((m for m in self.materials if m[0] == name), None)
+            if mat_data is None:
+                messagebox.showwarning("Invalid Material", "That material no longer exists. Please refresh your selection.")
+                return
+
             settings = database.get_settings()
-            
             order_id = database.get_next_order_id()
-            
+
             # Calculate Total Cost using Logic Module
-            total_cost, rate_label = logic.calculate_cost(w, h, mat_data, settings)
-            
-            # Open Preview Window 
-            PreviewWindow(self, name, w, h, rate_label, total_cost, order_id)
-            
+            total_cost, rate_label = logic.calculate_cost(w, h, m, mat_data, settings)
+
+            # Open Preview Window
+            PreviewWindow(self, name, w, h, m, rate_label, total_cost, order_id)
+
         except ValueError:
-            messagebox.showerror("Invalid Input", "Please enter valid numbers for weight and hours.")
+            messagebox.showerror("Invalid Input", "Please enter a valid weight, and whole numbers for hours and minutes.")
+        except RuntimeError as e:
+            messagebox.showerror("Database Error", str(e))
         except Exception as e:
             messagebox.showerror("Unexpected Error", f"Something went wrong: {e}")
     
     # Load Last Job Data into Input Fields for Quick Reprint
     def load_last_job(self):
-        last = database.get_last_receipt()
+        try:
+            last = database.get_last_receipt()
+        except RuntimeError as e:
+            messagebox.showerror("Database Error", str(e))
+            return
         if last:
             mat_name, weight, hours = last
+            # Stored print time is decimal hours, so split it back into hrs + mins
+            h, m = logic.split_duration(hours)
             self.mat_combo.set(mat_name)
             self.weight_entry.delete(0, tk.END)
             self.weight_entry.insert(0, str(weight))
             self.hours_entry.delete(0, tk.END)
-            self.hours_entry.insert(0, str(hours))
+            self.hours_entry.insert(0, str(h))
+            self.mins_entry.delete(0, tk.END)
+            self.mins_entry.insert(0, str(m))
             messagebox.showinfo("Loaded", "Last job data filled.")
         else:
             messagebox.showwarning("Empty", "No previous orders found.")
     
     def open_settings(self):
         """Creates a Settings Window to Update Meralco Rate and Setup Fee"""
-        SettingsWindow(self)
-        
+        try:
+            SettingsWindow(self)
+        except RuntimeError as e:
+            messagebox.showerror("Database Error", str(e))
+
     def open_materials_mgr(self):
-            """Creates a Material Manager Window to Add or Remove Materials from the Database"""
-            MaterialManagerWindow( self)
+        """Creates a Material Manager Window to Add or Remove Materials from the Database"""
+        try:
+            MaterialManagerWindow(self)
+        except RuntimeError as e:
+            messagebox.showerror("Database Error", str(e))
 
 # Start Application
 if __name__ == "__main__":

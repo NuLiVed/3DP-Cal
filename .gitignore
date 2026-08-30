@@ -10,3 +10,6 @@ data/*.db
 dist/
 build/
 *.spec
+
+# Generated receipt images
+Receipts/*.png

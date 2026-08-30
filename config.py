@@ -21,6 +21,16 @@ LOGO_PATH = os.path.join(ASSETS_DIR, 'Logo.png')
 SETTINGS_ICON = os.path.join(ASSETS_DIR, 'settings_icon.png')
 
 # Create folders immediately
-for folder in [RECEIPTS_DIR, REPORTS_DIR, DATA_DIR]:
-    if not os.path.exists(folder):
-        os.makedirs(folder)
+try:
+    for folder in [RECEIPTS_DIR, REPORTS_DIR, DATA_DIR]:
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+except OSError as e:
+    # No Tk root exists yet this early, so spin up a throwaway one just for the dialog
+    import tkinter as tk
+    from tkinter import messagebox
+    _root = tk.Tk()
+    _root.withdraw()
+    messagebox.showerror("Fatal Error", f"Could not create required folders:\n{e}")
+    _root.destroy()
+    sys.exit(1)

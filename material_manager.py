@@ -74,7 +74,11 @@ class MaterialManagerWindow:
         self.refresh_delete_list()
 
     def refresh_delete_list(self):
-        materials = database.get_all_materials()
+        try:
+            materials = database.get_all_materials()
+        except RuntimeError as e:
+            messagebox.showerror("Database Error", str(e))
+            materials = []
         names = [m[0] for m in materials]
         self.delete_combo['values'] = names
         if names:
@@ -84,25 +88,49 @@ class MaterialManagerWindow:
 
     def save_material(self):
         name = self.new_mat_name.get().strip()
+        if not name:
+            messagebox.showwarning("Incomplete", "Please enter a material name.")
+            return
+
         try:
             watt = float(self.new_mat_watt.get())
             price = float(self.new_mat_price.get())
-            if name:
-                database.add_material(name, watt, price)
-                messagebox.showinfo("Success", f"Added {name}!")
-                self.refresh_delete_list()
-                self.main_app.refresh_material_dropdown()
-                # Clear inputs
-                self.new_mat_name.delete(0, tk.END)
-                self.new_mat_watt.delete(0, tk.END)
-                self.new_mat_price.delete(0, tk.END)
         except ValueError:
-            messagebox.showerror("Error", "Invalid Material Data")
+            messagebox.showerror("Invalid Input", "Wattage and Price must be valid numbers.")
+            return
+
+        if watt <= 0 or price <= 0:
+            messagebox.showwarning("Invalid Input", "Wattage and Price must be greater than zero.")
+            return
+
+        try:
+            database.add_material(name, watt, price)
+        except ValueError as e:
+            # Raised by database.add_material when the name already exists
+            messagebox.showerror("Duplicate Material", str(e))
+            return
+        except RuntimeError as e:
+            messagebox.showerror("Database Error", str(e))
+            return
+
+        messagebox.showinfo("Success", f"Added {name}!")
+        self.refresh_delete_list()
+        self.main_app.refresh_material_dropdown()
+        # Clear inputs
+        self.new_mat_name.delete(0, tk.END)
+        self.new_mat_watt.delete(0, tk.END)
+        self.new_mat_price.delete(0, tk.END)
 
     def confirm_delete(self):
         target = self.delete_combo.get()
-        if target and messagebox.askyesno("Confirm", f"Delete '{target}' permanently?"):
-            database.delete_material(target)
+        if not target:
+            return
+        if messagebox.askyesno("Confirm", f"Delete '{target}' permanently?"):
+            try:
+                database.delete_material(target)
+            except RuntimeError as e:
+                messagebox.showerror("Database Error", str(e))
+                return
             self.refresh_delete_list()
             self.main_app.refresh_material_dropdown()
             messagebox.showinfo("Success", "Material Removed")

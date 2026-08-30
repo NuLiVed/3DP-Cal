@@ -4,9 +4,10 @@ from PIL import Image, ImageDraw, ImageFont
 import csv
 import os
 # Import the absolute paths from your main config
-from config import RECEIPTS_DIR, REPORTS_DIR 
+from config import RECEIPTS_DIR, REPORTS_DIR
+import logic
 
-def generate_pdf(f_base, mat, w, h, rate_label, total_cost):
+def generate_pdf(f_base, mat, w, h, m, rate_label, total_cost):
     """Generates a PDF receipt using the absolute path."""
     # Use the REGISTERED Receipts directory
     filepath = os.path.join(RECEIPTS_DIR, f"{f_base}.pdf")
@@ -23,7 +24,7 @@ def generate_pdf(f_base, mat, w, h, rate_label, total_cost):
         f"Order ID:   {f_base.split('_')[1]}",
         f"Material:   {mat}",
         f"Weight:     {float(w):.2f}g",
-        f"Print Time: {float(h):.2f} hrs",
+        f"Print Time: {logic.format_duration(int(h), int(m))}",
         "",
         f"Rate Tier: {rate_label}",
         "----------------------------------",
@@ -39,7 +40,7 @@ def generate_pdf(f_base, mat, w, h, rate_label, total_cost):
     c.drawString(100, y_position - 20, "Thank you for your business!")
     c.save()
     
-def generate_png(f_base, mat, w, h, rate_label, total_cost):
+def generate_png(f_base, mat, w, h, m, rate_label, total_cost):
     """Generates a PNG receipt saved in the Receipts folder."""
     # CHANGED: Save PNGs to 'Receipts' folder instead of a generic 'Exports'
     filepath = os.path.join(RECEIPTS_DIR, f"{f_base}.png")
@@ -63,7 +64,7 @@ def generate_png(f_base, mat, w, h, rate_label, total_cost):
         f"Order: #{f_base.split('_')[1]}",
         f"Material: {mat}",
         f"Weight: {w:.2f}g",
-        f"Time: {h:.2f} hrs",
+        f"Time: {logic.format_duration(int(h), int(m))}",
         "",
         f"Tier: {rate_label}",
         "--------------------------",
@@ -81,15 +82,21 @@ def export_to_excel(month, year, data):
     """Saves monthly report into the absolute Reports directory."""
     filename = os.path.join(REPORTS_DIR, f"Monthly_Report_{year}_{month}.csv")
     
-    headers = ["Order ID", "Date/Time", "Material", "Weight (g)", "Print Time (hrs)", "Total Price (Php)"]
+    headers = ["Order ID", "Date/Time", "Material", "Weight (g)", "Print Time", "Total Price (Php)"]
+
+    # Show print time as hrs + mins so the report matches the receipts
+    rows = [
+        list(row[:4]) + [logic.format_duration(*logic.split_duration(row[4]))] + list(row[5:])
+        for row in data
+    ]
 
     with open(filename, mode='w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow([f"3DP PRINT HUB - MONTHLY REVENUE REPORT ({month}/{year})"])
-        writer.writerow([]) 
+        writer.writerow([])
         writer.writerow(headers)
-        writer.writerows(data)
-        
+        writer.writerows(rows)
+
         total_revenue = sum(row[5] for row in data)
         writer.writerow([])
         writer.writerow(["", "", "", "", "GRAND TOTAL:", f"Php {total_revenue:.2f}"])

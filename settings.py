@@ -62,11 +62,22 @@ class SettingsWindow:
     def save_settings(self):
         try:
             r, f = float(self.rate_entry.get()), float(self.fee_entry.get())
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Please enter valid numbers for Rate and Fee.")
+            return
+
+        if r < 0 or f < 0:
+            messagebox.showwarning("Invalid Input", "Rate and Fee cannot be negative.")
+            return
+
+        try:
             database.update_settings(r, f)
-            messagebox.showinfo("Success", "Settings Updated!")
-            self.win.destroy()
-        except:
-            messagebox.showerror("Error", "Invalid Rate/Fee Data")
+        except RuntimeError as e:
+            messagebox.showerror("Database Error", str(e))
+            return
+
+        messagebox.showinfo("Success", "Settings Updated!")
+        self.win.destroy()
     
     def handle_monthly_report(self):
         """Helper to bridge the UI, Database, and Export modules"""
@@ -88,6 +99,10 @@ class SettingsWindow:
             filename = export.export_to_excel(month, year, records)
             
             messagebox.showinfo("Success", f"Monthly report saved to:\n{filename}")
-            
+
+        except PermissionError:
+            messagebox.showerror("Report Error", "Could not save the report — it may be open in another program. Close it and try again.")
+        except RuntimeError as e:
+            messagebox.showerror("Database Error", str(e))
         except Exception as e:
             messagebox.showerror("Report Error", f"Could not generate report: {e}")

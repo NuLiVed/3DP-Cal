@@ -11,119 +11,148 @@ def initialize_database():
     conn = get_connection()
     try:
         cursor = conn.cursor()
-        
+
         # 1. Tables Setup
         cursor.execute('''CREATE TABLE IF NOT EXISTS settings (
                             id INTEGER PRIMARY KEY,
                             meralco_rate REAL,
                             setup_fee REAL)''')
-                            
+
         cursor.execute('''CREATE TABLE IF NOT EXISTS materials (
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             name TEXT UNIQUE,
                             wattage REAL,
                             price_per_g REAL)''')
-                            
+
         cursor.execute('''CREATE TABLE IF NOT EXISTS receipts (
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             data TEXT, filename TEXT, material TEXT,
                             weight REAL, hours REAL, total_cost REAL,
                             date_timestamp TEXT)''')
-        
+
         # 2. Default Data Injection
         cursor.execute("SELECT COUNT(*) FROM settings")
         if cursor.fetchone()[0] == 0:
             cursor.execute("INSERT INTO settings (id, meralco_rate, setup_fee) VALUES (1, 20.0, 50.0)")
-            
+
         cursor.execute("SELECT COUNT(*) FROM materials")
         if cursor.fetchone()[0] == 0:
             default_materials = [("PLA", 120.0, 1.56), ("PETG", 140.0, 2.47)]
             cursor.executemany("INSERT INTO materials (name, wattage, price_per_g) VALUES (?, ?, ?)", default_materials)
-            
+
         conn.commit()
-    except Exception as e:
-        print(f"Database Init Error: {e}")
+    except sqlite3.Error as e:
         conn.rollback()
+        # Re-raise as a plain RuntimeError so the UI layer doesn't need to import sqlite3
+        raise RuntimeError(f"Failed to initialize database: {e}") from e
     finally:
         conn.close()
 
 # --- DRY (Don't Repeat Yourself) Refactor ---
 # Use get_connection() in all functions below to avoid path errors
+# Every function below normalizes sqlite3.Error into RuntimeError so callers
+# only need to catch one exception type for DB failures (locked file, disk I/O, etc.)
 
 def get_all_materials():
     """Returns materials sorted alphabetically by name."""
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        # Adding ORDER BY name makes the dropdown easier to navigate
-        cursor.execute("SELECT name, wattage, price_per_g FROM materials ORDER BY name ASC")
-        return cursor.fetchall()
+    try:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            # Adding ORDER BY name makes the dropdown easier to navigate
+            cursor.execute("SELECT name, wattage, price_per_g FROM materials ORDER BY name ASC")
+            return cursor.fetchall()
+    except sqlite3.Error as e:
+        raise RuntimeError(f"Could not load materials: {e}") from e
 
 def add_material(name, wattage, price_per_g):
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        try:
+    try:
+        with get_connection() as conn:
+            cursor = conn.cursor()
             cursor.execute("INSERT INTO materials (name, wattage, price_per_g) VALUES (?, ?, ?)", (name, wattage, price_per_g))
             conn.commit()
-        except sqlite3.IntegrityError:
-            print(f"Material '{name}' already exists.")
+    except sqlite3.IntegrityError:
+        raise ValueError(f"Material '{name}' already exists.")
+    except sqlite3.Error as e:
+        raise RuntimeError(f"Could not add material: {e}") from e
 
 def delete_material(material_name):
     """Removes a material from the database by its unique name."""
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("DELETE FROM materials WHERE name = ?", (material_name,))
-        conn.commit()
+    try:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM materials WHERE name = ?", (material_name,))
+            conn.commit()
+    except sqlite3.Error as e:
+        raise RuntimeError(f"Could not delete material: {e}") from e
 
 def get_settings():
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("SELECT meralco_rate, setup_fee FROM settings WHERE id = 1")
-        return cursor.fetchone()
+    try:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT meralco_rate, setup_fee FROM settings WHERE id = 1")
+            return cursor.fetchone()
+    except sqlite3.Error as e:
+        raise RuntimeError(f"Could not load settings: {e}") from e
 
 def update_settings(meralco_rate, setup_fee):
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        # FIXED: Removed the trailing comma after setup_fee = ?
-        cursor.execute("""
-            UPDATE settings
-            SET meralco_rate = ?,
-                setup_fee = ?
-            WHERE id = 1
-        """, (meralco_rate, setup_fee))
-        conn.commit()
+    try:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            # FIXED: Removed the trailing comma after setup_fee = ?
+            cursor.execute("""
+                UPDATE settings
+                SET meralco_rate = ?,
+                    setup_fee = ?
+                WHERE id = 1
+            """, (meralco_rate, setup_fee))
+            conn.commit()
+    except sqlite3.Error as e:
+        raise RuntimeError(f"Could not save settings: {e}") from e
 
 def get_next_order_id():
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("SELECT MAX(id) FROM receipts")
-        last_id = cursor.fetchone()[0]
-        return (last_id + 1) if last_id else 1
+    try:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT MAX(id) FROM receipts")
+            last_id = cursor.fetchone()[0]
+            return (last_id + 1) if last_id else 1
+    except sqlite3.Error as e:
+        raise RuntimeError(f"Could not determine next order id: {e}") from e
 
 def save_receipt(data, filename, material, weight, hours, total_cost):
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        query = """
-            INSERT INTO receipts (data, filename, material, weight, hours, total_cost, date_timestamp)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        """
-        cursor.execute(query, (data, filename, material, weight, hours, total_cost, timestamp))
-        conn.commit()
+    try:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            query = """
+                INSERT INTO receipts (data, filename, material, weight, hours, total_cost, date_timestamp)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """
+            cursor.execute(query, (data, filename, material, weight, hours, total_cost, timestamp))
+            conn.commit()
+    except sqlite3.Error as e:
+        raise RuntimeError(f"Could not save receipt record: {e}") from e
 
 def get_last_receipt():
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("SELECT material, weight, hours FROM receipts ORDER BY id DESC LIMIT 1")
-        return cursor.fetchone()
+    try:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT material, weight, hours FROM receipts ORDER BY id DESC LIMIT 1")
+            return cursor.fetchone()
+    except sqlite3.Error as e:
+        raise RuntimeError(f"Could not load the last receipt: {e}") from e
 
 def get_monthly_records(month, year):
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        query = """
-            SELECT id, date_timestamp, material, weight, hours, total_cost 
-            FROM receipts 
-            WHERE strftime('%m', date_timestamp) = ? 
-            AND strftime('%Y', date_timestamp) = ?
-        """
-        cursor.execute(query, (month, year))
-        return cursor.fetchall()
+    try:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            query = """
+                SELECT id, date_timestamp, material, weight, hours, total_cost
+                FROM receipts
+                WHERE strftime('%m', date_timestamp) = ?
+                AND strftime('%Y', date_timestamp) = ?
+            """
+            cursor.execute(query, (month, year))
+            return cursor.fetchall()
+    except sqlite3.Error as e:
+        raise RuntimeError(f"Could not load monthly records: {e}") from e
